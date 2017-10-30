@@ -1,0 +1,155 @@
+﻿
+@{
+    Layout = ViewBag.Layout;
+}
+
+@Styles.Render("~/CSS/ProfileCSS")
+
+<div id="HeaderMenu">
+    <!--Хлебные крошки -->
+
+    <div id="BreadCrumbs"  style="text-align:center; font-size: 16px; color: darkred; margin-left: -10px">
+        <b ng-if="@ViewBag.isNewGroup==true">Создание группы</b>
+        <b ng-if="@ViewBag.isNewGroup==false">Редактирование группы</b>
+
+        @*<a get-create-mission-view={{MissionTypeFilter!=types.all?MissionTypeFilter.index:types.quicklist.index}} change-mission-type-filter="{{MissionTypeFilter!=types.all?MissionTypeFilter.abr:types.quicklist.abr}}" style="color:#b1aeae; cursor:pointer">
+             @Language.Create<span class="glyphicon glyphicon-star hidden  indicator" aria-hidden="true"></span>
+            </a>*@
+
+
+        <!--\ <input id="NewMission" maxlength="35" type=text placeholder="поиск">-->
+    </div>
+    <!--//Хлебные крошки -->
+
+</div>
+<!-- //Горизонтальная колонка сверху -->
+
+<div id="Missions" hidden>
+    <div id="profile" ng-controller="ProfileController" ng-init="getGroupData(@ViewBag.GroupId);" style="margin-top:20px;">
+
+        
+        <div id="leftColumn">
+
+
+
+
+            <img id="avatar" src="" alt="" style="width:150px; ">
+
+            @*<img id="avatar" src="@ViewBag.User.AvatarPath" alt="Mountain View" style="width:150px; ">*@
+
+            <!--Ссылка для открытия меню выбора файла-->
+            <!--Скрытые инпуты для выбора файла-->
+            <input type="file" name="upload" id="upload_avatar" accept="image/jpeg,image/png"
+                   style="position: absolute; display: block; overflow: hidden; width: 0; height: 0; border: 0; padding: 0;"
+                   @*ng-change="SendToServer('/Profile/UploadGroupAvatar?groupId='+{{Group.Id}})"*@
+                   onchange="angular.element(this).scope().SendToServerAvatarGroup('/Profile/UploadGroupAvatar')"
+                   @*change-avatar='/Profile/UploadGroupAvatar?groupId={{Group.Id}}'*@
+                   @*onchange="document.getElementById('upload_text').value = this.value;  SendToServer(@ViewBag.User.Id);"*@ />
+            <input type="text" readonly id="upload_text'" hidden
+                   onclick="document.getElementById('upload_avatar').click();" />
+            <!--скрытыми инпутами управляет ссылка-->
+            <div style="width:100%; text-align:center; font-size: 12px;"><a href="#" onclick="document.getElementById('upload_avatar').click(); return false;">сменить</a> </div>
+            <!--Ссылка для открытия меню выбора файла-->
+
+        </div>
+
+        
+
+
+        <div id="rightColumn">
+            <span style="font-size:16px;"> Данные о группе</span>
+            <br />
+            <br />
+            <div class="input-group">
+
+                <input ng-model="Group.Name" type="text" class="form-control" placeholder="{{(Group==null || Group.Name==null) ? 'Введите имя': ''}}" aria-describedby="basic-addon1" />
+
+                <span class="input-group-addon">Имя</span>
+
+                
+            </div>
+
+
+
+
+
+
+
+
+
+            <div class="input-group">
+
+                <input ng-model="Group.ShortDescription" type="text" class="form-control" placeholder="{{(Group==null || Group.ShortDescription==null)?'Краткое описание':''}}" aria-describedby="basic-addon1">
+
+                <span class="input-group-addon">Краткое описание</span>
+            </div>
+            <br />
+            <div class="input-group">
+
+                <span class="input-group-addon" id="basic-addon1">Подробное описание</span>
+                <input type="text" class="form-control" placeholder="{{(Group==null || Group.FullDescription==null)?'Нет описания':''}}" ng-model="User.Country" aria-describedby="basic-addon1">
+            </div>
+            <div class="input-group">
+                <span class="input-group-addon" id="basic-addon1">Сайи</span>
+                <input type="text" class="form-control" placeholder="{{(Group==null || Group.SiteUrl==null)?'нет сайта':''}}" ng-model="User.Sity" aria-describedby="basic-addon1">
+            </div>
+            <br />
+            <div class="input-group" style="display:inline-block">
+                
+
+                <!--Выпадающее меню и оглавление-->          
+                <a class="btn btn-default" style="width: 85px; border-width:0px; background-color:gainsboro " >Доступ</a><div  class="dropdown" style="width: 235px; display:inline-block; border-width: 1px; border-color: #c7c7c7; border-style:solid">
+                   
+                        <a class="btn btn-default " style="text-align: left; width: 200px; border-width:0px; background-color:white "  data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                            {{Group.JoinOption==joinOptions.all ? 'Все пользователи' : ''}}
+                            {{Group.JoinOption==joinOptions.onlyInvite ? 'Только по приглашению' : ''}}
+                            {{Group.JoinOption==joinOptions.afterAgreement ? 'По заявке' : ''}}
+                    </a>
+                    <a class="btn btn-default" style="width: 25px; border-width:0px; background-color:white " data-toggle="dropdown"  aria-haspopup="true" aria-expanded="true"><span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a style="padding-left:10px" need-change-dropdown-title ng-click="Group.JoinOption=joinOptions.onlyInvite">Только по приглашению</a></li>
+                            <li><a style="padding-left:10px" need-change-dropdown-title ng-click="Group.JoinOption=joinOptions.afterAgreement">По заявке</a></li>
+                            <li class="displayNone"><a style="padding-left:10px" need-change-dropdown-title ng-click="Group.JoinOption=joinOptions.all">Все пользователи</a></li>
+
+                        </ul>
+                </div>
+                <!--//Выпадающее меню -->
+
+
+                
+                
+
+
+
+
+
+
+             </div>
+
+
+
+            <br />
+            <br />
+            <button type="button" class="btn" style="margin-left: 0px; background-color: gray; color: white" ng-click="saveGroupToDb(@ViewBag.isNewGroup)">Сохранить <span class="glyphicon glyphicon-star hidden indicator" aria-hidden="true"></span></button>
+
+
+
+
+            <div style="display:inline-block">
+                <h5>
+                    <span class="label label-success HiddenOpacity Added">Сохранено</span>
+                    <span class="label label-success HiddenOpacity AlreadyExist">Произошла ошибка</span>
+                </h5>
+
+
+            </div>
+
+        </div>
+
+
+    </div>
+    <div>
+
+
+    </div>
+</div>

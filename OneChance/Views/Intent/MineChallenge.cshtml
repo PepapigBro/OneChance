@@ -1,0 +1,107 @@
+﻿<!-- Details Челлендж (раскрывающийся блок с деталями Mission) -->
+<div class="DetailsBox collapse MissionDetails">
+    <div class="ContentMission">
+        <table class="ShDetails">
+            <tr>
+                <td><div style="width:10px;"></div></td>
+                <td colspan="2" class="Header">
+
+                    <!-- Горизонтально скроллируемое меню  -->
+                    <div class="ScrollPanel" ng-controller="CategoriesController" set-original-array="mission.StepOfMissions" dispalyed-prop="Category.Name" currenttype="currentDay" watchsuffics="день">
+                        <!-- Тут важно не расставлять пробелов в списке -->
+                        <span class="glyphicon glyphicon-menu-left Scroll Left HiddenControl" ng-click="changeScroll(-1, itemsArr.length-1)"></span><div class="ScrollBox size">
+                            <div class="DaysList"><div ng-repeat="item in itemsArr" ng-click="$parent.currentItem=$index; $parent.scrollPosition=$index;">{{$index+1}}  день</div></div>
+                        </div>
+                        <span class="glyphicon glyphicon-menu-right Scroll Right HiddenControl" ng-click="changeScroll(1, itemsArr.length-1)"></span>
+                    </div>
+                    <!-- //Горизонтально скроллируемое меню -->
+                    <!--Скрытые элементы управления - удалить копировать добавить  -->
+                    
+                </td>
+
+                
+                <td colspan="4" style="text-align:right; padding-right:15px">
+                    @*<button type="button" class="btn btn-xs"><span class="glyphicon glyphicon-cog" style="font-size:11px"></span></button>*@
+                </td>
+
+                <td style="width:9px"><div style="width:9px"></div></td>
+
+            </tr>
+
+
+
+
+            <tr class="NewTask">
+                <td><div style="width:10px;"></div></td>
+                <td class="AddingControl"><div class="AddingControl"></div></td>
+                <td class="NewTaskName">
+                  <div style="width:290px;">Название</div>  
+                    @*<form add-item>
+                        <input style="width:290px;" type="text"  placeholder="Новая задача">
+
+                    </form>*@
+                </td>
+                <td class="TaskPieces" style="width:90px;  text-align:center;" ng-click="ChangeSortType()">
+                    <span style="cursor:pointer">{{mission.Units}}</span>
+                </td>
+                <td colspan=2 class="TaskRemind" style="width:90px; ">
+                    <span style="cursor:pointer">Выполнено</span>
+                </td>
+                @*<td class="TaskRepeat">Повторы</td>*@
+                <td colspan=2><div style="width:35px"></div></td>
+            </tr>
+
+
+
+
+            @*<tr class="Message" ng-show="checkExisting(nameNewItem, currentDay.day)">
+                <td class="AddingControl Header">
+                    <div class="AddingControl"></div>
+                </td>
+                <td colspan="6">
+                    <div style="width:100%; overflow:hidden">
+                        <h5> <span class="label label-success">Задача уже существует, будут увеличены повторы</span></h5>
+                    </div>
+                </td>
+            </tr>*@
+
+
+
+
+            <tr class="Task" ng-repeat="item in mission.StepOfMissions|TaskFilterCategory:$parent.currentDay:this">
+                <td><div style="width:10px;"></div></td>
+                <td class="AddingControl"></td>
+                <td class="TaskItem" style="">
+                    <div style="text-align:left; width:290px;" class="EllipsisDots">{{item.Name.Text}}</div>
+                </td>
+                <td class="TaskVolume">{{item.Count}}</td>
+                <td class="TaskUnit"  colspan="2">{{item.TaskOfIntent.Count}}<span ng-if="item.TaskOfIntent.Count==null" style="color: darkgray; opacity: 1">--</span></td>
+                
+                <td colspan=2 style="padding-right: 7px; text-align:right">
+                
+
+                </td>
+            </tr>
+
+            <tr>
+                
+            </tr>
+            <tr  ng-if="itemsCountAtConcreteCategory==0">
+                <td><div style="width:10px;"></div></td>
+                <td class="AddingControl"></td>
+                <td colspan=6 style="text-align:center; font-size:13px; color: #a5a5a5"  >
+                   
+                    <div style="height: 25px;"> В этот день задач нет</div>
+
+
+                </td>
+                @*<td  colspan=1></td>*@
+            </tr>
+
+
+
+        </table>
+    </div>
+    <div class="EmptySpace" ></div>
+</div>
+<!-- //Details Челлендж (раскрывающийся блок с деталями Mission) -->

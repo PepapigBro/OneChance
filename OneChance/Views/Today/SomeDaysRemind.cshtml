@@ -1,0 +1,49 @@
+﻿
+
+<table style="width: 485px" class="ContentOfTask">
+
+
+    <tr>
+        <td style="width:250px;">
+            <div class="ItemTaskName" style="width:250px; overflow: hidden">
+                <span show-btns-control-for-task>{{mission.Name}}</span>
+
+            </div>
+        </td>
+        <td style="width:100%"><div style="width:100%"></div></td>
+        <td style="text-align:right; width:80px;">
+            <div class="ItemInfoTask" style="width:80px; overflow:hidden; text-align:right">  @*{{stepOfMission.Mission.Units}}*@:&nbsp;</div>
+        </td>
+        <td style="white-space:nowrap;">
+            <div style="text-align:right"> @*необходимо {{stepOfMission.Count}}*@</div>
+
+        </td>
+
+    </tr>
+
+    @*{{mission.Name}}:
+        за {{mission.RangeDatesCount}} дней: повторы - {{mission.StepOfMissions.length}}, {{mission.Units}}- {{mission.ValueOnRangeDate}}*@
+
+
+
+    <tr>
+        <td colspan="2">
+            <div class="ItemMissionLink" style="">
+                <a href="#" get-review-view>
+                    Количество задач: {{mission.CountOnRangeDate}},&nbsp; {{mission.Units}} - общее количество: {{mission.ValueOnRangeDate}}
+                </a>
+            </div>
+        </td>
+
+
+        <td colspan="2" style="white-space:nowrap;">
+            @*<div style="text-align:right" ng-if="stepOfMission.TaskOfIntent.Count>0">Выполнено {{stepOfMission.TaskOfIntent.Count}}</div>
+                <div style="text-align:right" ng-if="stepOfMission.TaskOfIntent==null||stepOfMission.TaskOfIntent.Count==0||stepOfMission.TaskOfIntent.Count==null">Еще ничего не сделано</div>*@
+        </td>
+    </tr>
+
+
+
+
+
+</table>

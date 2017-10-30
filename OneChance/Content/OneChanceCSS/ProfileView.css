@@ -1,0 +1,25 @@
+﻿
+#profile{
+  min-height: 500px;
+  width: 550px;
+}
+
+
+#avatar{   
+}
+
+#leftColumn, #rightColumn{
+    display: inline-block; 
+    vertical-align: top;
+     height: 280px;
+}
+
+#leftColumn{    
+    width: 150px;
+   
+}
+
+#rightColumn{
+    padding-left: 15px;
+    width: 390px;     
+}

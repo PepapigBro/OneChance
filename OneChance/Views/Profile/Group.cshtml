@@ -1,0 +1,108 @@
+﻿
+@{
+    Layout = ViewBag.Layout;
+}
+
+@Styles.Render("~/CSS/ProfileCSS")
+
+
+<div id="HeaderMenu">
+    <!--Хлебные крошки -->
+    <!-- href="#/MineMission/{{types.all.abr}}"  и убрать return false-->
+    <div id="BreadCrumbs" style="text-align:center; font-size: 16px; color: darkred; margin-left: -10px">
+        <b>Просмотр группы</b>
+
+        @*<a get-create-mission-view={{MissionTypeFilter!=types.all?MissionTypeFilter.index:types.quicklist.index}} change-mission-type-filter="{{MissionTypeFilter!=types.all?MissionTypeFilter.abr:types.quicklist.abr}}" style="color:#b1aeae; cursor:pointer">
+             @Language.Create<span class="glyphicon glyphicon-star hidden  indicator" aria-hidden="true"></span>
+            </a>*@
+
+
+        <!--\ <input id="NewMission" maxlength="35" type=text placeholder="поиск">-->
+    </div>
+    <!--//Хлебные крошки -->
+
+
+
+
+
+
+
+</div>
+<!-- //Горизонтальная колонка сверху -->
+
+<div id="Missions" hidden>
+    <div id="profile" ng-controller="ProfileController" style="margin-top:20px;" ng-init="getGroupData(@ViewBag.GroupId)">
+
+
+        <div id="leftColumn" style="width: 150px;">
+
+            <img id="avatar" src="" alt="" style="width:150px; ">
+            @**@
+        </div>
+
+        <div id="rightColumn">
+            <div style="margin-top:-5px;">
+                <span style="font-size:18px;">{{Group.Name}}</span>
+                <span style="font-size:12px; float: right; color:#959595">Участников: {{Group.UsersCount}}</span>
+            </div>
+
+            <div style="margin-top: -5px">
+               
+               
+                <span ng-if="Group.IsImCreator==true" style="font-size:12px; color:#959595; cursor: pointer;" href='/Profile/EditGroup' ng-click="getViewByAjax($event, Group.Id);">Редактировать</span>
+
+               
+                 <span style="font-size:12px; float: right; color:#959595">Добавить новость</span>
+                
+            </div>
+
+            <div style="margin-top: -5px">
+
+
+                <span style="font-size:12px;  color:#959595">Отправить приглашение</span>
+
+            </div>
+
+            <div style="margin-top: 0px">
+                <span style="font-size:12px;  color:#959595 ">
+                    Вступить в группу можно:
+                    {{Group.JoinOption==joinOptions.all ? 'Всем пользователям' : ''}}
+                    {{Group.JoinOption==joinOptions.onlyInvite ? 'Только по приглашению' : ''}}
+                    {{Group.JoinOption==joinOptions.afterAgreement ? 'По заявке' : ''}}
+                </span>
+                </div>
+
+
+                <div style="margin-top: 25px">
+
+                    <span style="font-size:13px">Сайт: {{Group.SiteUrl!=null?Group.SiteUrl:'нет сайта'}}</span>
+
+
+
+
+
+
+
+
+                    <div style="display: block; vertical-align:top;">
+                        <div ng-if="Group.ShortDescription!=null" style="height: 30px"><span style="font-size:13px">Описание: {{Group.ShortDescription}}</span></div>
+                        <div ng-if="Group.FullDescription!=null" style="height: 30px"><span style="font-size:13px">{{Group.FullDescription}}</span></div>
+
+
+
+                    </div>
+
+                </div>
+
+
+            </div>
+
+        <div>
+
+            @*тут будет стена*@
+
+        </div>
+
+    </div>
+
+</div>

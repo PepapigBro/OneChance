@@ -1,0 +1,80 @@
+#LeftMenu a.list-item{
+    border-style: solid;
+    border-width: 1px;
+    border-color: white;
+     
+    border-radius: 0;
+    color: #5c5b5b;
+    font-size: 13px; 
+    
+    position: relative;
+    display: block;
+    padding: 10px 15px;
+  /*  margin-bottom: -1px;*/
+    background-color: #fff;
+   text-decoration: none;
+    
+    
+}
+
+#LeftMenu .list-item:hover, #LeftMenu .list-item.SelectedLeftMenu{
+    background-color:  #f5f5f5; 
+    text-decoration: none;
+    color:#606060
+     
+}
+
+#LeftMenu .list-item:hover{
+    
+    border-width: 1px;
+    border-color: #9d9d9d;
+        border-style: solid;
+}
+
+
+
+
+
+#LeftMenu span.badge{
+font-size: 10px;
+background-color: #a5a0a0;
+border-radius: 1px;
+margin-top: 3px;
+}
+
+
+#LeftMenu{
+    margin-top:49px;
+    width:250px;
+}
+
+
+
+
+/* Пункт меню - Сегодня */
+#LeftMenu #TodayMenuItem{
+     Color:#ba3047; 
+     margin-top:0px;
+     padding-bottom:0px
+}
+
+
+
+/* Скрытые изначально ссылки на Завтра или Другой день */
+#AnotherDay{
+    opacity:0;
+    color:#9a9a9a; 
+    margin-top:0px; 
+    padding-top:0px;
+}
+
+
+#TodayMenuItem:hover #AnotherDay{
+    opacity:1;
+    transition: opacity 0.2s linear 0.2s;
+}
+
+#AnotherDay span:hover{
+    color:black;
+}
+/* //Скрытые изначально ссылки на Завтра или Другой день */

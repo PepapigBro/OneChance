@@ -1,0 +1,174 @@
+﻿<!-- Details Быстрый список (раскрывающийся блок с деталями Mission) -->
+
+<div class="DetailsBox collapse MissionDetails">
+    <div class="ContentMission">
+        <table class="ShDetails">
+            <tr>
+                <td><div style="width:10px;"></div></td>
+                <td colspan="6" class="Header">
+                
+
+                    <!-- Горизонтально скроллируемое меню  -->
+                    <div class="ScrollPanel" ng-controller="CategoriesController" set-original-array="mission.StepOfMissions" dispalyed-prop="Category.Name" currenttype="currentCategory" watchsuffics="категория">
+                        <!-- Тут важно не расставлять пробелов в списке -->
+                        <span class="glyphicon glyphicon-menu-left Scroll Left HiddenControl" ng-click="changeScroll(-1, itemsArr.length-1)"></span><div class="ScrollBox size">
+                            <div class="DaysList">
+                                <div ng-repeat="item in itemsArr" ng-click="$parent.currentItem=$index; $parent.scrollPosition=$index;">{{item.Category.Name}}</div>
+                            </div>
+                        </div>
+                        <span class="glyphicon glyphicon-menu-right Scroll Right HiddenControl" ng-click="changeScroll(1, itemsArr.length-1)"></span>
+                    </div>
+                    <!-- //Горизонтально скроллируемое меню -->
+                    <!--HiddenControls      -->
+                    <div style="display:inline-table; float: right ">
+
+
+                        <div>
+                            <!-- <div class="Info" ><span class="glyphicon glyphicon-option-vertical"></span> {{UniqueArrayScrollPanel.length-1}} {{sufficsCtrl("категория", UniqueArrayScrollPanel.length-1)}} </div>
+                             <div style="height:16px;"></div>
+                             -->
+                            <div>
+
+                                <button type="button" class="btn btn-xs" link-modal="CategoryQuicklist" action-modal="create"><span class="glyphicon glyphicon-plus" style="font-size:11px"></span></button>
+                                <button ng-hide="currentCategory.category=='Все позиции'" type="button" class="btn btn-xs" link-modal="ModalDelete" action-modal="delete"><span class="glyphicon glyphicon-trash" style="font-size:11px"></span></button>
+                                <button type="button" class="btn btn-default btn-xs">Дедлайн</button>
+                            </div>
+                        </div>
+
+                    </div>
+                    <!--//HiddenControls-->
+
+                </td>
+                <td colspan=1 style="width:9px"><div style="width:9px; height:100%; "></div></td>
+
+
+            </tr>
+
+            <tr class="NewTask">
+                <td><div style="width:10px;"></div></td>
+                <td class="AddingControl Header">
+                    <div class="AddingControl"></div>
+                </td>
+                <td class="NewTaskName">
+                    <form add-item>
+                        <input style="width:210px;" type="text" placeholder="Добавить элемент списка">
+
+                    </form>
+
+                </td>
+                <td class="TaskPieces" style="width:80px;  text-align:center; cursor:pointer" ng-click="ChangeSortType()">
+
+                    Количество
+
+                </td>
+                <td colspan=4 class="TaskRemind" style="width:100px; ">
+
+                    <!--Выпадающее меню Напоминать ли Для всех-->
+                    <!--            <div class="dropdown NoChangeHeadLable" style="width:100%">
+                                            <a data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                                            Напоминание
+                                            <span class=" glyphicon glyphicon-menu-down" style="display:inline; font-size:11px" ></span>
+                                            </a>
+
+                                            <ul class="dropdown-menu" style="font-size:13px; ">
+                                                <li><a href="#" onclick="return false" change-allreminds='1' style="color:black;">Да для всех</a>
+                                                </li>
+                                                <li><a href="#" onclick="return false"  change-allreminds='0' style="color:black;">Нет для всех</a>
+                                                </li>
+                                            </ul>
+                    </div> -->
+                    <!--//Выпадающее меню Напоминать ли Для всех-->
+
+                </td>
+            </tr>
+
+
+            <!--check-existing-->
+            <!--check-existing="nameNewItem"-->
+            <tr class="Message" ng-show="checkExisting(nameNewItem, currentCategory.category)">
+                <td><div style="width:10px;"></div></td>
+                <td class="AddingControl Header">
+                    <div class="AddingControl"></div>
+                </td>
+                <td colspan="5">
+                    <div style="width:100%; overflow:hidden">
+                        <h5> <span class="label label-success" style="color:#009a00">Элемент уже существует в категории "{{ExistingItemCategory}}", будет увеличено его количество</span></h5>
+                    </div>
+                </td>
+            </tr>
+
+
+            <!--Вывод элементов списка -->
+            <tr class="Task" style="margin-right:-15px;" ng-repeat="item in mission.StepOfMissions|TaskFilterCategory:$parent.currentCategory:this">
+                <td><div style="width:10px;"></div></td>
+                <td class="AddingControl"></td>
+                <td class="TaskItem" scroll-when-click={{item.Category.Name}}>
+                    <div style="width:260px; overflow:hidden; text-align:left">{{item.Name.Text}}</div>
+
+                </td>
+                <td class="TaskPieces">
+
+                    <input type="text" placeholder="--" ng-model="item.Count" only-digits="7">
+                </td>
+                <td colspan=2 class="TaskRemind" style="text-align: center;  width: 85px">
+                    <!--    <span ng-click="ChangeRemindOption(item)" style="opacity:1;  cursor:pointer">
+                                                {{ item.isRemind ? 'Да' : 'Нет' }}
+                                            </span>
+            -->
+                    <!--Удаление элемента списка -->
+
+                </td>
+
+
+                <td colspan=2 style=" text-align:right; padding-right:7px; ">
+                    <span class="glyphicon glyphicon-trash Trash " style=" " ng-click="removeItem(item)"></span>
+
+
+                </td>
+            </tr>
+            <tr ng-if="itemsCountAtConcreteCategory==0">
+                <td><div style="width:10px;"></div></td>
+                <td class="AddingControl"></td>
+                <td colspan=4 style="text-align:center; font-size:13px; color: #a5a5a5">
+                    Категория пуста
+
+
+                </td>
+                <td colspan="2"></td>
+            </tr>
+
+            <tr ng-if="itemsCountAtConcreteCategory==-1">
+                <td><div style="width:10px;"></div></td>
+                <td class="AddingControl"></td>
+                <td colspan=4 style="text-align:center; font-size:13px; color: #a5a5a5">
+                    В списках нет ни одного элемента
+
+
+                </td>
+                <td colspan="2"></td>
+            </tr>
+        </table>
+
+    </div>
+    <div class="EmptySpace"></div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

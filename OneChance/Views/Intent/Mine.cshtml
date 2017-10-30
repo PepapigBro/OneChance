@@ -1,0 +1,334 @@
+﻿@*{{MissionTypeFilter.abr}}*@
+@using Resources
+<!-- Вы добавили -->
+<!-- Вам предложено выполнить -->
+<!-- Вы предложили выполнить -->
+<!-- Вы самостоятельно выполняете -->
+<!-- Вы совместно выполняете -->
+<!-- Вы выполняете поручение -->
+<!-- Вы отправили для совместного выполнения -->
+<!-- Вы отправили для совместного выполнения -->
+<!-- Вы контроллируете выполнение -->
+<!-- Вы подписаны -->
+<!-- Вы перепоручили выполнение (выполняетеся, ожидает, отклонено, добавил?) -->
+<!-- Вы выполнили -->
+<!-- Вы выполнили, ожидает подтверждения поручителя -->
+<!-- Ваше поручение выполнено, ожидает вашего подтверждения -->
+<!-- Вы выполнили поручение, поручитель подтвердил -->
+<!-- Ваше поручение выполнено, вы подтвердили -->
+<!-- Не подтверждено, вы предложили переделать/доделать -->
+<!-- Не подтверждено, вам предложено переделать/доделать  -->
+<!-- Горизонтальная колонка сверху -->
+
+<div id="HeaderMenu">
+    <!--Хлебные крошки -->
+    <!-- href="#/MineMission/{{types.all.abr}}"  и убрать return false-->
+    <div id="BreadCrumbs">
+        <a onclick="return false" ng-click="changeMissionTypeFilter(types.all); GetMineMissionData(types.all.index, 0)" style="color:black; font-weight:bold; cursor: pointer" keep-selected-menu-item>@Language.MyIntents</a><span ng-if="MissionTypeFilter!=types.all"> \&nbsp;{{types[MissionTypeFilter.abr].menu}} </span>
+
+
+
+
+        @*<a get-create-mission-view={{MissionTypeFilter!=types.all?MissionTypeFilter.index:types.quicklist.index}} change-mission-type-filter="{{MissionTypeFilter!=types.all?MissionTypeFilter.abr:types.quicklist.abr}}" style="color:#b1aeae; cursor:pointer">
+         @Language.Create<span class="glyphicon glyphicon-star hidden  indicator" aria-hidden="true"></span>
+        </a>*@
+
+
+        <!--\ <input id="NewMission" maxlength="35" type=text placeholder="поиск">-->
+    </div>
+    <!--//Хлебные крошки -->
+    <!--Выпадающее меню -->
+    <div class="dropdown">
+        <a data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">@Language.All </a>
+        <a data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"> <span class="caret"></span> </a>
+        <ul class="dropdown-menu" style="font-size:13px; ">
+            <li><a change-mission-prop-filter={{MissionProps.Active}} need-change-dropdown-title>Активные</a></li>
+            <li><a change-mission-prop-filter={{MissionProps.Done}} need-change-dropdown-title>Выполненные</a></li>
+            <li><a change-mission-prop-filter={{MissionProps.Added}} need-change-dropdown-title>Добавленные</a></li>
+            <li><a change-mission-prop-filter={{MissionProps.Created}} need-change-dropdown-title>Созданные</a></li>
+            <li><a change-mission-prop-filter={{MissionProps.Paused}} need-change-dropdown-title>Приостановленные</a></li>
+            <li><a change-mission-prop-filter={{MissionProps.Deleted}} need-change-dropdown-title>Удаленные</a></li>
+            <li><a change-mission-prop-filter={{MissionProps.Private}} need-change-dropdown-title>Видимые только мне</a></li>
+            <li><a change-mission-prop-filter={{MissionProps.Public}} need-change-dropdown-title>Видимые не только мне</a></li>
+            <li class="displayNone"><a change-mission-prop-filter need-change-dropdown-title>Все</a></li>
+        </ul>
+    </div>
+    <!--//Выпадающее меню -->
+
+
+   
+
+
+
+</div>
+<!-- //Горизонтальная колонка сверху -->
+<!--
+var InterplayStage = {
+    Sent: 1,
+    Received: 2,
+    UserAccepted: 3,
+    ImAccepted: 4,
+    UserCanceled: 5,
+    ImCanceled: 6,
+    UserDeleted: 7,
+    ImDeleted: 8
+    -->
+
+<div id="TaskContent" class="scrollList">
+    
+    <!-- Popover -->
+    <div id="popoverSuggestedInfoToMe" class="hidden" style="font-size:12px;">
+        <div class="popover-heading"><span style="font-size:12px;">Вы предложили выполнить</span></div>
+        <div class="popover-body"> <span style="font-size:12px;color:#5f5f5f">Отправлено 12.11.2017 пользователю </span> <br /><span class="textInside" style="font-size:12px; color:black"></span> </div>
+    </div>
+    <!-- // Popover -->
+    <!-- Popover -->
+    <div id="popoverSuggestedInfoFromMe" class="hidden">
+        <div class="popover-heading"><span style="font-size:12px;">Вам предложено выполнить</span></div>
+        <div class="popover-body"><span style="font-size:12px;;color:#5f5f5f">Получено 12.11.2017 от пользователя</span> <br /><span class="textInside" style="font-size:12px; color:black"></span> </div>
+    </div>
+    <!--// Popover -->
+    <!-- Popover -->
+    <div id="popoverVisibilityMenu" class="hidden" >
+        <div class="popover-heading"><span style="font-size:12px;">Кто видит его у меня</span></div>
+        <div class="popover-body" >
+            <span class="BrightWhenHover" change-intent-visiblefor="OnlyI">{{ObserversGroup.OnlyI.name}}</span> 
+            <br />
+            <span class="BrightWhenHover" change-intent-visiblefor="MiniGroup">{{ObserversGroup.MiniGroup.name}}<a>(5)</a></span>
+            <br />
+            <span class="BrightWhenHover" change-intent-visiblefor="Group">{{ObserversGroup.Group.name}} <a>Nike</a></span> 
+            <br />
+            <span class="BrightWhenHover" change-intent-visiblefor="All">{{ObserversGroup.All.name}}</span> 
+            @*<span class="textInside" style="font-size:12px; color:black"></span>*@ 
+        </div>
+    </div>
+    <!--// Popover -->
+    <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ ИНТЕНТ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+    <!-- -->
+    <a href="#" class="list-group-item" style="margin-left:-15px">
+        <!--                   Выберите тип-->
+        <div style="float:left">
+            <div style="display:inline-block">
+                <button type="button" class="btn btn-xs" ng-class="{'UnderLine':MissionTypeFilter==types.all}" ng-click="changeMissionTypeFilter(types.all); GetMineMissionData(types.all.index, 0)" select-btn>Все</button>
+                <div class="CreateMissionBtn">&nbsp;</div>
+            </div>
+                <div style="display:inline-block">
+                    <button type="button" class="btn btn-xs" ng-class="{'UnderLine':MissionTypeFilter==types.quicklist}" ng-click="changeMissionTypeFilter(types.quicklist); GetMineMissionData(types.quicklist.index, 0)" select-btn>Быстрые списки</button>
+                    <div class="CreateMissionBtn"  get-create-mission-view={{types.quicklist.index}}>создать</div>
+                </div>
+                <div style="display:inline-block">
+                    <button type="button" class="btn btn-xs" ng-class="{'UnderLine':MissionTypeFilter==types.challenge}" ng-click="changeMissionTypeFilter(types.challenge); GetMineMissionData(types.challenge.index, 0)" select-btn>Челленджи</button>
+                    <div class="CreateMissionBtn" get-create-mission-view={{types.challenge.index}} >создать</div>
+                </div>
+                <div style="display:inline-block">
+                    <button type="button" class="btn btn-xs" ng-class="{'UnderLine':MissionTypeFilter==types.regular}" ng-click="changeMissionTypeFilter(types.regular); GetMineMissionData(types.regular.index, 0)" select-btn>Регулярные</button>
+                    <div class="CreateMissionBtn" get-create-mission-view={{types.regular.index}} >создать</div>
+                </div>
+                <div style="display:inline-block">
+                    <button type="button" class="btn btn-xs" ng-class="{'UnderLine':MissionTypeFilter==types.remind}" ng-click="changeMissionTypeFilter(types.remind); GetMineMissionData(types.remind.index, 0)" select-btn>Напоминания</button>
+                    <div class="CreateMissionBtn" get-create-mission-view={{types.remind.index}} change-mission-type-filter="{{types.remind.abr}}">создать</div>
+                </div>
+
+            </div>
+    </a>
+
+
+    <div class="ItemMission" ng-controller="MissionController" ng-repeat="intent in fillingArray |MissionFilter:MissionTypeFilter:MissionPropFilter" ng-init="mission=intent.Mission" >
+        <!-- Заголовок Mission-->
+        
+        
+
+        <a href="#" class="list-item-mission" style="height:90px" keep-selected-item  ng-controller="StatController" ng-init="intent = $parent.intent;  mission = $parent.intent.Mission;">
+            <table style="margin-left:-10px;">
+                <tr>
+                    <td style=" text-align:center; width:20px; ">
+                        <div style=" width 20px; text-align:left; padding-left:3px">
+
+
+                            <!--Иконки о том, что это порученное намерение (мной или мне) -->
+                            @*<a class="PopoverMissionVisibility" style="text-decoration: none; color:#8d8d8d; "
+                                   init-popover="#popoverSuggestedInfoFromMe"
+                                   text-inside="" data-placement="left"
+                                   ng-if="mission.InteractionId.name!=progress.user.name &&
+                                    (progress.InterplayStage==InterplayStage.UserAccepted
+                                    )">
+                                    <span class="glyphicon glyphicon-share-alt" style="color:rgb(154, 154, 154); font-size:13px; " popover-with-span="hover"></span>
+                                </a>*@
+
+
+                            <a class="PopoverMissionVisibility" style="text-decoration: none; color:#8d8d8d; "
+                               init-popover="#popoverSuggestedInfoToMe"
+                               text-inside="{{itemMission.PartnerId}}" data-placement="left"
+                               ng-if="progress.PartnerId.name!=progress.user.name &&
+                                (progress.InterplayStage==InterplayStage.ImAccepted
+                                )">
+                                <span class="glyphicon glyphicon-share-alt flipH" style="color:rgb(154, 154, 154); font-size:13px; " popover-with-span="hover"></span>
+                            </a>
+                            <!-- //Иконки о том, что это порученное намерение (мной или мне) -->
+
+                        </div>
+
+
+
+                    </td>
+                    <td>
+                        <div class="TaskName" style="width:350px"><span class="Name collapsed" show-details="MissionDetails">{{mission.Name}} &nbsp;<span class="EditMissionBtn glyphicon glyphicon-th" style=""></span></span>
+                          
+                         <span style="font-size: 11px; opacity: 1" ng-if="mission.ModifiedMissionsCount>0||mission.OriginalMissionId!=mission.Id" ng-click="getSearchingView(1, mission.OriginalMissionId)">Есть вариации</span>
+                        <span class="glyphicon glyphicon-star hidden indicator" aria-hidden="true"></span> 
+                        </div>
+                    </td>
+                    <td>@*show-details="Comments"*@
+                        <div class="InfoTask"  ><span class="EditMissionBtn" get-view-for-edit-mission={{mission.Id}}><span class="glyphicon glyphicon-cog" style="font-size:12px"></span></span>&nbsp;{{typesArr[mission.Type].name}}</div>
+                        
+                    </td>
+                  
+                </tr>
+                <tr>
+                    <td></td>
+                    <td>
+                        <div class="MissionLink" style="font-size:11px;">@**@
+                            <!-- Секция действий с Mission -->
+                            <div style="display:inline-table; ">
+                                <span href="#" class="UsersList" style="display: table-cell; vertical-align: middle; padding-right:3px;">{{mission.StatOfMission.AddStat}}</span>
+                                <div>
+                                    <div class="Info2" >Добавили</div>
+                                </div>
+                            </div> &nbsp;
+                            <div style="display:inline-table; ">
+                                <span href="#" class="UsersList" style="display: table-cell; vertical-align: middle; padding-right:3px;">{{mission.StatOfMission.MakeStat}}</span>
+                                <div>
+                                    <div class="Info2">Выполняют</div>
+                                </div>
+                            </div> &nbsp;
+
+                            <div style="display:inline-table; ">
+                                <span href="#" class="UsersList" style="display: table-cell; vertical-align: middle; padding-right:3px;">{{intent.StatOfIntent.Observe}}</span>
+                                <div>
+                                    <div class="Info2">Подписаны на вас</div>
+                                </div>
+                            </div> &nbsp;
+
+                          </div>
+                    </td>
+                    <td>
+                        <!-- Секция пользователя создавшего -->
+                        <div  class="" style="float:right; font-size:11px; color:#8d8d8d; margin-top:-7px;">
+
+
+                            
+                            <a class="PopoverMissionVisibility" style="text-decoration: none; color:#8d8d8d; "
+                               init-popover="#popoverVisibilityMenu"
+                               text-inside="" data-placement="right">
+                                <span style="color:rgb(154, 154, 154); font-size:11px; " popover-with-span="click">
+                                    
+                                    {{ObserversGroupArr[intent.VisibleFor].name}}
+                                </span>
+                            </a>
+
+
+                        </div>
+                        <!-- //Секция пользователя создавшего// -->
+                    </td>
+                   
+                </tr>
+            </table>
+
+            <table style="margin-top:-5px;margin-left:-10px;">
+                <tr>
+                    <td style="width:20px;"><div style="width:20px;"></div></td>
+                    <td style="height:30px;">
+
+                        <!-- Добавленные мной самостоятельные, имеющие отношение только ко мне -->
+                        <div ng-if="intent.Interaction==undefined"> 
+                            
+                            <div style="height:30px;" class="outer" ng-if="intent.State==States.Added || intent.State==undefined" index={{$index}}><span class="MiniButtonAction" change-intent-state="Active" >Начать</span>
+                                <span class="MiniButtonAction ShowAfter2s" change-intent-state="WaitForStartDate" >Начать с понедельника</span>
+                                <span class="MiniButtonAction ShowAfter3s" ng-click="ShowSuggestWindow()">Предложить</span>
+                                <span class="MiniButtonAction ShowAfter3s" change-intent-state="Deleted" ><span class="glyphicon glyphicon-remove" style="font-size:10px;" ></span></span>
+                            </div>@*change-intent-state="Deleted"*@ @*remove-mission-at-mine-intents*@
+                            
+                            <div style=" height:30px; " class="outer" ng-if="intent.State==States.Active" index={{$index}}><span class="MiniLabelAction">Вы выполняете</span>
+                                <span class="MiniButtonAction ShowAfter2s" change-intent-state="Paused" >Приостановить</span>
+                                <span class="MiniButtonAction ShowAfter3s" ng-click="ShowSuggestWindow()">Предложить</span>
+                                <span class="MiniButtonAction ShowAfter3s"  change-intent-state="Added"><span class="glyphicon glyphicon-remove" style="font-size:10px;"></span></span>
+                            </div>@*change-intent-state="Added"*@
+
+                            <div style="height:30px;" class="outer" ng-if="intent.State==States.Paused" index={{$index}}><span class="MiniLabelAction" >Вы приостановили</span>
+                                <span class="MiniButtonAction ShowAfter2s" change-intent-state="Active" >Продолжить</span>
+                                <span class="MiniButtonAction ShowAfter3s" ng-click="ShowSuggestWindow()">Предложить</span>
+                                <span class="MiniButtonAction ShowAfter3s" change-intent-state="Added"><span class="glyphicon glyphicon-remove" style="font-size:10px;"></span></span>
+                            </div>
+
+                            <div style=" height:30px; " class="outer" ng-if="intent.State==States.WaitForStartDate" index={{$index}}><span class="MiniLabelAction">Ожидает понедельника</span>
+                                <span class="MiniButtonAction ShowAfter2s" change-intent-state="Added">Отменить</span>
+                                <span class="MiniButtonAction ShowAfter3s" ng-click="ShowSuggestWindow()">Предложить</span>
+                                @*<span class="MiniButtonAction ShowAfter3s" change-intent-state="Deleted"><span class="glyphicon glyphicon-remove"></span></span>*@
+                            </div>
+                        </div>
+                        <!-- // Добавленные мной самостоятельные, имеющие отношение только ко мне -->
+
+                        <!--  -->
+                        <div style=" height:30px; " class="outer" ng-if="intent.State==States.Deleted" index={{$index}}><span class="MiniLabelAction">Удалено</span>
+                            <span class="MiniButtonAction ShowAfter2s" change-intent-state="Added">Востановить</span>
+                            <span class="MiniButtonAction ShowAfter3s" ng-click="ShowSuggestWindow()">Предложить</span>
+                            <span class="MiniButtonAction ShowAfter3s" remove-mission-at-mine-intents=true>Удалить совсем</span>
+                            
+                            @*add-mission-to-mine-intents*@
+                        </div>
+
+
+
+
+                    
+                    
+                    <td style=" width:100px; text-align:right">
+                        <canvas style="width:100px; height:18px" class="example" show-stats=week></canvas>
+
+                    </td>
+                   
+                </tr>
+            </table>
+        </a>
+        <!-- //Заголовок Mission-->
+        <!-- Секция описания и мотивации -->
+        <div class="DetailsBox collapse collapse Comments">
+            <blockquote style="font-size:12px; width:480px">
+                {{mission.Description}}
+                <image src="prev.jpg"></image>
+            </blockquote>
+        </div>
+        <!-- //Секция описания и мотивации// -->
+        
+
+
+        <div ng-switch on="typesArr[mission.Type].abr">
+            <div ng-switch-when="quicklist">
+                @Html.Partial("MineQuicklist")
+            </div>
+
+            <div ng-switch-when="challenge">
+                @Html.Partial("MineChallenge")
+            </div>
+
+            <div ng-switch-when="regular">
+                @Html.Partial("MineRegular")
+            </div>
+
+            <div ng-switch-when="remind">
+                @Html.Partial("MineRemind")
+            </div>
+        </div>
+
+
+
+
+    </div>
+    <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~// ИНТЕНТ //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+
+
+</div>
+
+
+
+

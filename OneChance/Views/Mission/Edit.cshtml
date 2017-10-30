@@ -1,0 +1,145 @@
+﻿
+    @*Layout = "~/Views/Shared/_OneChanceLayout.cshtml";*@
+
+@*script>
+    types.quicklist.src = 'CreateQuicklist';
+    types.challenge.src = 'CreateChallenge';
+    types.regular.src = 'CreateRegular';
+    types.remind.src = 'CreateRemind';
+
+
+
+</script>*@
+
+
+
+<!-- Горизонтальная колонка сверху -->
+<div id="HeaderMenu">
+    <!--Хлебные крошки -->
+    <div id="BreadCrumbs">
+        <b>Редактирование</b> <!-- <input id="NewMission" maxlength="35" type=text placeholder="Добавить">-->
+    </div>
+
+
+</div>
+<!-- //Горизонтальная колонка сверху -->
+
+@*ng-init="getEmptyTemplates()"*@
+
+    <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ ИНТЕНТ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+
+
+
+ <div ng-controller="MissionController"  fire-when-show  class="list-group ItemMission" id="TaskContent"> @*fire-when-show*@
+
+     <div  href="#" class="list-group-item" style="border-radius: 0;">
+         <table style="background-color: #e6e6e6">
+             <tr>
+                 <td>
+                     <div class="TaskName" style="width:300px">
+                         <input type=text placeholder="Введите имя" ng-model="mission.Name" style="width:100%; cursor:text; background-color: #e6e6e6; padding-left:16px;" focus-me="true">
+
+                         <!--<span ng-hide="newMissionName.length>0" class="glyphicon glyphicon-pencil"></span>-->
+                         
+                     </div>
+                 </td>
+                 <td style="padding-top: 20px;">
+                     <div style="font-size: 12px; padding-right:16px" class="InfoTask">Единица измерения результата</div>
+                     <div style="font-size: 12px; padding-right:16px" class="InfoTask"><input select-click type=text placeholder="Например, количество" ng-model="mission.Units" style="width:150px; text-align: right;  float:right; cursor:text; background-color: #e6e6e6;" /></div>
+                     <!--    <div class="InfoTask" show-details="Comments" onclick="return false">{{mission.type.name}}</div>-->
+                 </td>
+             </tr>
+             
+
+
+             <tr>
+
+                 
+
+                 <td>
+                     <div class="MissionLink">
+
+
+
+
+                     </div>
+                 </td>
+                 <td>
+
+                     <!-- Секция пользователя создавшего -->
+                     <div style="float:right; font-size:12px; color:#8d8d8d;">
+                         <!--<span ng-click="Test()">{{mission.owner.name}}</span>-->
+                     </div>
+                              <!-- //Секц
+                     ия пользователя создавшего// -->
+
+                     </td>
+
+                 
+             </tr>
+         </table>
+</div>
+    <!-- //Заголовок Mission-->
+    <!-- Секция описания и мотивации -->
+    <div class="DetailsBox collapse Comments">
+        <blockquote style="font-size:12px; width:480px">
+            {{mission.Description}}
+            <image src="prev.jpg"></image>
+        </blockquote>
+    </div>
+    <!-- //Секция описания и мотивации// -->
+    
+    <div ng-switch on="typesArr[mission.Type].abr">
+        <div ng-switch-when="quicklist">
+            @Html.Partial("Editquicklist")
+        </div>
+
+        <div ng-switch-when="challenge">
+            @Html.Partial("Editchallenge")
+        </div>
+
+
+        <div ng-switch-when="regular">
+            @Html.Partial("Editregular")
+        </div>
+
+        <div ng-switch-when="remind">
+            @Html.Partial("Editremind")
+        </div>
+    </div>
+
+    @*<div ng-include="mission.type.src"></div>*@<div ng-include="mission.type.src"></div>
+    @*@RenderSection("CreateQuicklist")*@
+    @*@Html.Partial("Create"+ "quicklist")*@
+
+
+
+    @*<h5> <span class="label label-success  MissionCreated" style="margin-left: -9px;">Намерение создано. Для его запуска перейдите в "Мои намерения" и нажмите "Начать"</span>     </h5>*@<h5><span class="label label-success  MissionCreated" style="margin-left: -9px;"></span></h5>
+    <button type="button" class="btn btn-success" style="margin-left: -9px;" save-to-db-from-ajax>Сохранить<span class="glyphicon glyphicon-star hidden indicator" aria-hidden="true"></span></button>
+    
+    <div style="display:inline-block">
+        <h5>
+            <span class="label label-success HiddenOpacity Added">Сохранено</span>
+            <span class="label label-success HiddenOpacity AlreadyExist">Произошла ошибка</span>
+        </h5>
+
+    </div>
+
+
+    <!--   -->
+</div>
+
+            <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~// ИНТЕНТ //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+
+
+
+
+
+
+
+
+
+
+        </div>
+
+

@@ -1,0 +1,262 @@
+﻿
+    @*Layout = "~/Views/Shared/_OneChanceLayout.cshtml";*@
+
+@*script>
+    types.quicklist.src = 'CreateQuicklist';
+    types.challenge.src = 'CreateChallenge';
+    types.regular.src = 'CreateRegular';
+    types.remind.src = 'CreateRemind';
+
+
+
+</script>*@
+
+
+
+<!-- Горизонтальная колонка сверху -->
+<div id="HeaderMenu">
+    <!--Хлебные крошки -->
+    <div id="BreadCrumbs">
+        <b>Создание намерений</b> <!-- <input id="NewMission" maxlength="35" type=text placeholder="Добавить">-->
+    </div>
+    <!--//Хлебные крошки -->
+    <!--Выпадающее меню -->
+    <!--    <div class="dropdown">
+           <a  data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+           Все задачи
+           </a>
+           <a data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+           <span class="caret"></span>
+           </a>
+           <ul class="dropdown-menu" style="font-size:13px; ">
+              <li><a href="#">Актуальные</a></li>
+              <li><a href="#">Выполненные</a></li>
+              <li><a href="#">Отклоненные</a></li>
+              <li><a href="#">Отмеченные</a></li>
+           </ul>
+        </div>
+        -->
+    <!--//Выпадающее меню -->
+</div>
+<!-- //Горизонтальная колонка сверху -->
+
+@*ng-init="getEmptyTemplates()"*@
+<div class="list-group" id="TaskContent" ng-init=" openCollapsed(true,MissionTypeFilter)" style="margin-left:20px">
+
+    <a href="#" class="list-group-item" onclick="return false">
+        <!--                   Выберите тип-->
+        <div style="float:left">
+            <button type="button" class="btn btn-xs" ng-class="{'UnderLine':MissionTypeFilter==types.quicklist}" ng-click="changeMissionTypeFilter(types.quicklist); openCollapsed(true, types.quicklist) " select-btn>Быстрый список</button>
+            <button type="button" class="btn btn-xs" ng-class="{'UnderLine':MissionTypeFilter==types.challenge}" ng-click="changeMissionTypeFilter(types.challenge); openCollapsed(true, types.challenge); " select-btn>Челлендж</button>
+            <button type="button" class="btn btn-xs" ng-class="{'UnderLine':MissionTypeFilter==types.regular}" ng-click="changeMissionTypeFilter(types.regular); openCollapsed(true, types.regular); " select-btn>Регулярное</button>
+            <button type="button" class="btn btn-xs" ng-class="{'UnderLine':MissionTypeFilter==types.remind}" ng-click="changeMissionTypeFilter(types.remind); openCollapsed(true, types.remind); " select-btn>Напоминание</button>
+        </div>
+        <div style="float:right">
+            <div class="btn-group">
+                <button type="button" class="btn btn-xs indicatorTrigger" ng-class="{'UnderLine':MissionTypeFilter==types.all}" ng-click="changeMissionTypeFilter(types.all); " get-examples select-btn>Примеры &nbsp;<span class="glyphicon glyphicon-star hidden indicator" aria-hidden="true"></span></button>
+                <button type="button" class="btn btn-xs " ng-click="changeMissionTypeFilter(types.all);" refresh-examples style="margin-left:1px">        <span style="color:#e26464" class="glyphicon glyphicon-refresh indicator "></span></button>
+            </div>
+        </div>
+
+
+
+    </a>
+    <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ ИНТЕНТ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+
+   
+    <div ng-controller="MissionController" class="ItemMission" ng-repeat="mission in MissionsRandomExample" ng-show="MissionTypeFilter==types.all">
+
+        <!-- ng-show="creatingTypeMission==null" -->
+        <!-- Заголовок Mission-->
+        <a href="#" class="list-item-mission">
+            <table>
+                <tr>
+                    <td>
+
+                        <div class="TaskName EllipsisDots" style="width:350px">
+                            <span class="Name collapsed" show-details="MissionDetails">{{mission.Name}}</span>
+
+
+                        </div>
+                    </td>
+                    <td>
+                        <div class="InfoTask" show-details="Comments" onclick="return false">{{typesArr[mission.Type].name}}</div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="MissionLink" style="font-size:11px;">
+                            @**@
+                        <!-- Секция действий с Mission -->
+                        <div style="display:inline-table; ">
+                            <span href="#" class="UsersList" style="display: table-cell; vertical-align: middle; padding-right:3px;">{{mission.StatOfMission.AddStat}}</span>
+                            <div>
+                                <div class="Info2">Добавили</div>
+                            </div>
+                        </div> &nbsp;
+                        <div style="display:inline-table; ">
+                            <span href="#" class="UsersList" style="display: table-cell; vertical-align: middle; padding-right:3px;">{{mission.StatOfMission.MakeStat}}</span>
+                            <div>
+                                <div class="Info2">Выполняют</div>
+                            </div>
+                        </div> &nbsp;
+
+                        <div style="display:inline-table; ">
+                            <span href="#" class="UsersList" style="display: table-cell; vertical-align: middle; padding-right:3px;">{{intent.StatOfIntent.Observe}}</span>
+                            <div>
+                                <div class="Info2">Подписаны на вас</div>
+                            </div>
+                        </div> &nbsp;
+
+                    </div>
+                    </td>
+                    <td>
+
+                        <!-- Секция пользователя создавшего -->
+                        <div style=" font-size:12px; color:#8d8d8d; width:150px; ">
+                            <div style="float:right;  max-width:150px; text-align:right" class="Ellipsis">
+                                <span>{{mission.User.Name}}</span>
+                            </div>
+                        </div>
+                        <!-- //Секция пользователя создавшего// -->
+
+                    </td>
+                </tr>
+            </table>
+        </a>
+        <!-- //Заголовок Mission-->
+        <!-- Секция описания и мотивации -->
+        <div class="DetailsBox collapse Comments">
+            <blockquote style="font-size:12px; width:480px">
+                {{mission.Description}}
+                <image src="prev.jpg"></image>
+            </blockquote>
+        </div>
+        <!-- //Секция описания и мотивации// -->
+
+               <div ng-switch on="typesArr[mission.Type].abr">
+                    <div ng-switch-when="quicklist">
+                       @Html.Partial("ExampleQuicklist")
+                    </div>
+
+                    <div ng-switch-when="challenge">
+                        @Html.Partial("ExampleChallenge")
+                    </div>
+
+                    <div ng-switch-when="regular">
+                        @Html.Partial("ExampleRegular")
+                    </div>
+
+                    <div ng-switch-when="remind">
+                        @Html.Partial("ExampleRemind")
+                    </div>
+                </div>
+                @*<div ng-include="mission.type.src"></div>*@
+                @*<div ng-include="'Createchallenge.html'"></div>*@
+            </div>
+
+
+            @*ng-show="MissionTypeFilter!=types.all"*@
+            @*|MissionFilter:MissionTypeFilter*@
+            <div ng-controller="MissionController" ng-repeat="mission in MissionEmptyTemplates|TypeFilter:MissionTypeFilter" class="ItemMission NewMission" fire-when-show>
+               
+                <div href="#" class="list-group-item" >
+                    <table>
+                        <tr>
+                            <td><div class="TaskName" style="width:300px" ><input type=text placeholder="Введите имя" ng-model="mission.Name" style="width:100%; cursor:text;" focus-me="true">
+                                    
+                                    <!--<span ng-hide="newMissionName.length>0" class="glyphicon glyphicon-pencil"></span>-->
+
+                                </div>
+                            </td>
+                            <td style="padding-top: 20px;">
+                                <div style="font-size: 12px"  class="InfoTask">Единица измерения результата</div>
+                                <div style="font-size: 12px"  class="InfoTask"><input select-click type=text placeholder="Например, количество"  ng-model="mission.Units" style="width:150px; text-align: right;  float:right; cursor:text;" /></div>
+                                <!--    <div class="InfoTask" show-details="Comments" onclick="return false">{{mission.type.name}}</div>-->
+                            </td>
+                        </tr>
+                        <tr>
+                            
+                            <td>
+                                <div class="MissionLink">
+
+
+
+
+                                </div>
+                            </td>
+                            <td>
+
+                                <!-- Секция пользователя создавшего -->
+                                <div style="float:right; font-size:12px; color:#8d8d8d;">
+                                    <!--<span ng-click="Test()">{{mission.owner.name}}</span>-->
+                                </div>
+                                <!-- //Секция пользователя создавшего// -->
+
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <!-- //Заголовок Mission-->
+                <!-- Секция описания и мотивации -->
+                <div class="DetailsBox collapse Comments">
+                    <blockquote style="font-size:12px; width:480px">
+                        {{mission.Description}}
+                        <image src="prev.jpg"></image>
+                    </blockquote>
+                </div>
+                <!-- //Секция описания и мотивации// -->
+                <div ng-switch on="typesArr[mission.Type].abr">
+                    <div ng-switch-when="quicklist">
+                        @Html.Partial("Createquicklist")
+                    </div>
+
+                    <div ng-switch-when="challenge">
+                        @Html.Partial("Createchallenge")
+                    </div>
+
+
+                    <div ng-switch-when="regular">
+                        @Html.Partial("Createregular")
+                    </div>
+
+                    <div ng-switch-when="remind">
+                        @Html.Partial("Createremind")
+                    </div>
+                </div>
+
+                @*<div ng-include="mission.type.src"></div>*@
+                @*@RenderSection("CreateQuicklist")*@
+                @*@Html.Partial("Create"+ "quicklist")*@
+
+
+
+                @*<h5> <span class="label label-success  MissionCreated" style="margin-left: -9px;">Намерение создано. Для его запуска перейдите в "Мои намерения" и нажмите "Начать"</span>     </h5>*@
+                <button type="button" class="btn btn-success" style="margin-left: -9px;" save-to-db-from-ajax>Создать намерение <span class="glyphicon glyphicon-star hidden indicator" aria-hidden="true"></span></button>
+                <button type="button" class="btn btn-default" clear-mission-data>Очистить</button>
+                <div style="display:inline-block">
+                    <h5>
+                        <span class="label label-success HiddenOpacity Added" >Создано</span>
+                        <span class="label label-success HiddenOpacity AlreadyExist" >Произошла ошибка</span>
+                    </h5>
+
+                </div>
+
+
+                <!--   -->
+            </div>
+
+            <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~// ИНТЕНТ //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+
+
+
+
+
+
+
+    
+
+
+        </div>
+
+

@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OneChance", "OneChance\OneChance.csproj", "{B87B18D6-7EB4-4854-B3F5-E46AA5700043}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AndroidServerSide", "AndroidServerSide\AndroidServerSide.csproj", "{0A375C6D-8C77-4A72-A066-FBC2EC2193AB}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B87B18D6-7EB4-4854-B3F5-E46AA5700043}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B87B18D6-7EB4-4854-B3F5-E46AA5700043}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B87B18D6-7EB4-4854-B3F5-E46AA5700043}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B87B18D6-7EB4-4854-B3F5-E46AA5700043}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0A375C6D-8C77-4A72-A066-FBC2EC2193AB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0A375C6D-8C77-4A72-A066-FBC2EC2193AB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0A375C6D-8C77-4A72-A066-FBC2EC2193AB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0A375C6D-8C77-4A72-A066-FBC2EC2193AB}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

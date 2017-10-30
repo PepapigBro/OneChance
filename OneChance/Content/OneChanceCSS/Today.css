@@ -1,0 +1,194 @@
+/* Стили для поля ввода реального количества объема*/
+.InputRealVolume{
+    display:table-cell;
+    vertical-align: middle;
+    white-space: nowrap; overflow:hidden; 
+    font-size:13px;
+    height:30px;
+    min-width: 10px;
+    max-width: 80px;
+    cursor:pointer;
+    padding-left:20px;
+    text-align: right;
+    color:#747474;
+    
+}
+
+.InputRealVolume~div{
+   font-size:13px; 
+   display:table-cell;
+    vertical-align: middle;
+    height:30px;
+  color:#747474;
+    
+}
+
+.InputRealVolume:focus{
+    background-color: white;
+    outline-offset:0px;    
+    text-align:right;
+    border-radius:0; 
+    height:30px;
+    font-size:13px;
+    
+    outline:none;
+    
+}
+/* //Стили для поля ввода реального количества объема// */
+
+#Tasks{
+    margin-left:10px;
+}
+
+#Tasks a.list-group-item{
+    padding-left:15px; 
+    padding-top:15px;
+    margin-left:-15px; 
+    margin-top:0px; 
+    margin-bottom:15px;
+    height:70px;  
+    width:505px; 
+    border-radius: 0;
+     background-color: rgba(255, 255, 255, 0);
+       
+}
+
+
+#Tasks a.list-group-item{
+    overflow: hidden;
+}
+
+
+/***** Зачеркивание элемента *****/
+.ItemTaskName span {
+    position: relative; /* Относительное позиционирование */
+    font-size: 18px;
+   }
+
+.ItemTaskName span::after {       
+    content: ''; /* Выводим элемент */
+    position: absolute; /* Абсолютное позиционирование */
+    left: 0; 
+    top: -moz-calc(50% - 1px); /* Положение элемента */
+    top: -webkit-calc(50% - 1px); /* Положение элемента */
+    top: -o-calc(50% - 1px); /* Положение элемента */
+    top: -ms-calc(50% - 1px); /* Положение элемента */
+    top: calc(50% - 1px); /* Положение элемента */
+       
+    width: 0%; /* Ширина градиента*/
+    height: 2px; /* Высота родителя */
+    /* Градиент */
+    /*transition: width 1s ease-in 0s;  */
+    margin-left:-2px;
+       
+    background: -moz-linear-gradient(left, rgba(113, 113, 113, 0.6), rgba(113, 113, 113, 0.6) 100%);
+    background: -webkit-linear-gradient(left, rgba(113, 113, 113, 0.6), rgba(113, 113, 113, 0.6) 100%);
+    background: -o-linear-gradient(left, rgba(113, 113, 113, 0.6), rgba(113, 113, 113, 0.6) 100%);
+    background: -ms-linear-gradient(left, rgba(113, 113, 113, 0.6), rgba(113, 113, 113, 0.6) 100%);
+    background: linear-gradient(left, rgba(113, 113, 113, 0.6), rgba(113, 113, 113, 0.6) 100%);
+       
+   }
+
+span.StrikeAble::after{
+    width: -moz-calc(100% + 4px);
+    width: -webkit-calc(100% + 4px);
+    width: -o-calc(100% + 4px);
+    width: -ms-calc(100% + 4px);
+    width: calc(100% + 4px);
+    transition: width 0.5s ease-out 0s;    
+}
+
+/***** //Зачеркивание элемента *****/
+
+
+
+/***** Выполненная задача *****/
+/*a.ItsDone{
+    opacity:0.4;
+    transition: opacity 0.5s linear 0.7s;
+}*/
+
+.ContentOfTask.ItsDone  {
+    /*color:#8d8d8d;
+    transition: color 1.5s linear 1.7s;*/
+    opacity: 0.4;
+    transition: opacity 0.5s linear 0.7s;
+
+}
+/***** //Выполненная задача *****/
+
+
+/***** Отклоненная задача *****/
+
+.ContentOfTask.ItsForget{
+    /*color:#8d8d8d;
+    transition: color 0.5s linear 1.3s;*/
+    opacity: 0.4;
+    transition: opacity 0.5s linear 0.3s;
+}
+
+/***** //Отклоненная задача *****/
+
+
+/***** Кнопки появляющиеся после нажатия на название задачи *****/
+.BtnsDoneConfirm{
+    bottom:-30px;  
+    transition: bottom 0.1s linear 0s;
+    position:absolute;  
+    left:15px;  
+    height:25px; 
+    
+}
+
+
+
+.BtnsDoneConfirm.ShowBtn{
+    bottom:2px; 
+    transition: bottom 0.1s linear 0s;
+}
+/***** //Кнопки появляющиеся после нажатия на название задачи *****/
+
+
+
+
+
+
+
+
+
+
+
+/* Надпись-ссылка - информация об Mission снизу под названием самой задачи*/
+.ItemMissionLink{
+    font-size:12px; 
+    margin-top:-3px; 
+    font-family: Georgia, 'Times New Roman', Times, serif;
+}
+
+.ItemMissionLink a{
+    color:#8d8d8d;
+}
+
+.ItemMissionLink a:hover{
+    color:#4a4848;    
+}
+
+
+
+/* Надпись - информация о задаче справа*/
+.ItemInfoTask{
+    width:135px; 
+    color:#9b9b9b; 
+    font-size:12px; 
+    text-align:right;
+}
+
+
+.BrightWhenHover{
+    color:#5f5f5f;
+    cursor:pointer;
+    font-size:12px;
+}
+.BrightWhenHover:hover{
+    color:#000000;
+}

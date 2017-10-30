@@ -1,0 +1,106 @@
+﻿
+@{
+    Layout = ViewBag.Layout;
+}
+@Styles.Render("~/CSS/ProfileCSS")
+
+
+<div id="HeaderMenu">
+    <!--Хлебные крошки -->
+    <!-- href="#/MineMission/{{types.all.abr}}"  и убрать return false-->
+    <div id="BreadCrumbs"  style="text-align:center; font-size: 16px; color: darkred;">
+        <b>Друзья</b>
+
+
+
+
+        <!--\ <input id="NewMission" maxlength="35" type=text placeholder="поиск">-->
+    </div>
+    <!--//Хлебные крошки -->
+
+
+</div>
+<!-- //Горизонтальная колонка сверху -->
+
+     
+
+
+
+    <div id="profile" ng-controller="ProfileController" style="margin-top:20px;" ng-init="isOnlyMyFriends=true; getFriendshipData(0)">
+    <table style="width:505px; margin-left:10px;">
+        <tr>
+            <td style="width:50%">
+                <button type="button" class="btn btn-xs" underline-watch="isOnlyMyFriends" condition="{{isOnlyMyFriends==true}}"  style="cursor:pointer" ng-click="isOnlyMyFriends=true; getFriendshipData(0)">Мои друзья</button>
+                <button type="button" class="btn btn-xs" underline-watch="isOnlyMyFriends" condition="{{isOnlyMyFriends==false}}" style="cursor:pointer" ng-click="isOnlyMyFriends=false; getFriendshipData(0)">Найти друзей</button>
+            </td>
+            <td style="width:50%; text-align:right">
+               
+            </td>
+        </tr>
+
+        <tr>
+            <td colspan="2">
+                <input ng-if="fillingArray.length>0" placeholder="Начните вводить имя" style="width:250px; height: 30px; margin-top:10px" />
+            </td>
+
+        </tr>
+
+    </table>
+
+    <div id="Missions" hidden>
+
+        <div ng-if="fillingArray.length==0 && isOnlyMyFriends==true" style="display: table-cell; text-align:center; vertical-align:middle; height: 120px; width: 505px; font-size: 18px">
+            У вас еще нет друзей на ресурсе OneChance
+        </div>
+
+        <!-- Поиск друзей -->
+        <table style="width:505px; margin-top: 25px; margin-left:10px;">
+            <tr ng-repeat="user in fillingArray">
+                <td style="width: 75px">
+                    @*background: url(blah.jpg) 50% 50% no-repeat; /* 50% 50% centers image in div */
+                        width: 250px;
+                        height: 250px;*@
+                    <div style="width: 75px; height: 75px; overflow:hidden; border-bottom-width: 7px; border-top-width: 7px; border-color:white; border-style: solid">
+                        <image style="width: 75px;" src="{{user.AvatarPath}}"></image>
+                    </div>
+                </td>
+                <td style="width: 250px; padding-left: 15px ">
+                    <div style="cursor: pointer" href="/profile/profileview" ng-click="getViewByAjax($event, user.Id)"><b>{{user.Name}}&nbsp;{{user.Surname}}</b></div>
+                    <div>{{user.Age}} &nbsp; Друзей {{user.FriendCount}}</div>
+                    <div>{{user.Sity}}&nbsp;{{user.Country}}</div>
+
+                </td>
+                <td style="text-align:right">
+
+                    <div ng-if="user.FriendshipWithMe.Status==friendshipStatus.cancel || user.FriendshipWithMe==null">
+                        <div><span style="cursor:pointer" ng-click="friendshipChangeStatus(friendshipStatus.waiting, user)">Добавить в друзья</span></div>
+                        <div><span></span></div>
+                    </div>
+                    <div ng-if="user.FriendshipWithMe.Status==friendshipStatus.waiting && user.FriendshipWithMe.isImSender==false">
+                        <div><span>Предложил(а) вам дружбу</span></div>
+                        <div>
+                            <span style="cursor:pointer; color: gray" ng-click="friendshipChangeStatus(friendshipStatus.confirmed, user)">принять</span> или
+                            <span style="cursor:pointer; color: gray" ng-click="friendshipChangeStatus(friendshipStatus.cancel, user)"> отклонить</span>
+                        </div>
+                    </div>
+                    <div ng-if="user.FriendshipWithMe.Status==friendshipStatus.waiting && user.FriendshipWithMe.isImSender==true">
+                        <div><span>Вы предложили дружбу</span></div>
+                        <div><span style="cursor:pointer; color: gray" ng-click="friendshipChangeStatus(friendshipStatus.cancel, user)">отменить</span></div>
+                    </div>
+                    <div ng-if="user.FriendshipWithMe.Status==friendshipStatus.confirmed" style="cursor:pointer">
+                        <div><span>У вас в друзьях</span></div>
+                        <div><span style="cursor:pointer; color: gray" ng-click="friendshipChangeStatus(friendshipStatus.cancel, user)">убрать</span></div>
+                    </div>
+
+
+                </td>
+            </tr>
+
+
+
+        </table>
+        <!-- Поиск друзей -->
+
+
+    </div>
+</div>

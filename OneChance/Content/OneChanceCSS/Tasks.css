@@ -1,0 +1,866 @@
+
+
+
+
+.DontShow{
+    
+    display: none;
+     opacity:0;
+}
+
+div[add-remove] .StaticShow{
+    display: inline;
+     opacity:1;
+    
+}
+
+.ShowWhenHover{
+    display: inline;
+    opacity:0;
+}
+
+div[add-remove]:hover .ShowWhenHover{
+    transition: opacity 0.5s linear 0.3s;
+    opacity:1;
+}
+
+
+
+
+
+.Grey{
+    /*background-color: #f0f0f0;*/
+  /* border: 1px solid rgba(242, 242, 242, 0.75);*/
+    border-left: 2px solid #dddddd;
+    
+    cursor:pointer;
+    width:160px;
+    margin-bottom:15px;
+    padding-left:8px;
+    
+}
+
+.DaysOfWeek *{
+    /*No select*/
+    -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+    -khtml-user-select: none; /* Konqueror HTML */
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* Internet Explorer/Edge */
+    user-select: none; /* Non-prefixed version, currently
+                                  supported by Chrome and Opera */
+}
+div.DaysOfWeek span{
+    font-size: 12px;
+}
+
+div.DaysOfWeek div span.HiddenControl{
+    font-size: 12px;
+    opacity:0;
+}
+
+div.DaysOfWeek div:hover span.HiddenControl{
+    transition: opacity 0.5s linear 0.7s;
+    opacity:0.3;
+}
+
+div.DaysOfWeekName{
+    width: 315px;
+}
+
+div.DaysOfWeek div, div.DaysOfWeekName div{
+    display: inline-block;
+    width: 45px;
+    height: 30px;
+    text-align: center;
+    padding-top: 3px;
+    font-size: 12px;
+    margin: auto;    
+    
+}
+#TaskContent div.DaysOfWeek div, #TaskContent div.DaysOfWeekName div{
+border: 2px solid rgb(245, 245, 245);   
+}
+
+#modalCalendar div.DaysOfWeek div, #modalCalendar div.DaysOfWeekName div{
+    border: 2px solid rgb(255, 255, 255); 
+}
+    
+#TaskContent .DetailsBox td div.RRR:hover{ /*Квадратики (не пустые) при наведении */
+/*background-color: #eaeaea;*/
+border: 2px solid #888888;  
+cursor: pointer;
+}
+
+
+#TaskContent .DetailsBox div.DaysOfWeek div.Mark, 
+#modalCalendar .DetailsBox div.DaysOfWeek div.Mark
+{
+background-color: #eaeaea;
+border: 2px solid rgba(191, 190, 190, 0.22);
+}
+
+#TaskContent .DetailsBox div.DaysOfWeek div.Mark span,
+#modalCalendar .DetailsBox div.DaysOfWeek div.Mark span
+{
+background-color: #eaeaea;
+}
+
+
+
+
+div.DaysOfWeekName div{
+    text-align: center;
+    font-weight: bold;
+    
+   /* border-bottom: 1px solid #acacac;*/
+    
+}
+
+    
+    
+
+/***** Выполненная задача *****/
+a.ItsDone{
+    opacity:0.4;
+    transition: opacity 0.5s linear 0.7s;
+}
+
+.TaskName span.ItsDone  {
+    color:#8d8d8d;
+    transition: color 0.5s linear 0.7s;
+}
+
+.ItsDone .MissionLink{
+    color: #807f7f;
+    transition: color 0s linear 0s;
+}
+/***** //Выполненная задача *****/
+
+
+/***** Отклоненная задача *****/
+a.ItsForget{
+    opacity:0.4;
+    transition: opacity 0.5s linear 0.3s;
+}
+
+.TaskName  span.ItsForget{
+    color:#8d8d8d;
+    transition: color 0.5s linear 0.3s;
+}
+
+
+.ItsForget .MissionLink{
+    color: #807f7f;
+    transition: color 0s linear 0s;
+    
+   
+}
+/***** //Отклоненная задача *****/
+
+
+
+/* При наведении на ячейки в Quicklist*/
+tr.Day td:hover:not(:empty){
+/*background-color: #eaeaea;
+    cursor: pointer;*/
+}
+
+#TaskContent .DetailsBox tr.Task:hover {
+background-color: #eaeaea;   
+}
+
+#TaskContent .DetailsBox tr.Task:hover input {
+background-color: #eaeaea;     
+}
+
+#TaskContent .DetailsBox tr.Task:hover div {
+background-color: #eaeaea;     
+}
+
+#TaskContent .DetailsBox tr.Task:hover td {
+background-color: #eaeaea;     
+}
+
+#TaskContent .DetailsBox tr.Task:hover span {
+background-color: #eaeaea;     
+}
+
+
+/* иконки Удалить*/
+tr.Task span, div.SelectedDates span span{
+opacity:0;
+
+}
+
+
+/*tr.Task:hover span, div.SelectedDates span:hover span{
+opacity:0.5;
+transition: opacity 0.2s linear 0.2s;
+}*/
+
+tr.Task :last-child{
+background-color:white; 
+width:25px; 
+text-align:right;
+}
+/* //иконки Удалить// */
+
+
+#TaskContent .DetailsBox .HoveredColumn, #TaskContent .DetailsBox .HoveredColumn div, #TaskContent .DetailsBox .HoveredColumn input{
+background-color: #eaeaea;     
+}
+/* //При наведении на ячейки */
+
+
+
+
+
+
+/* Надпись-ссылка - информация об Mission снизу под названием самой задачи*/
+.MissionLink{
+    font-size:12px; 
+    margin-top:-3px; 
+   /* font-family: Georgia, 'Times New Roman', Times, serif;*/
+}
+
+.MissionLink a{
+    color:#8d8d8d;
+    padding-right: 5px;
+}
+
+.MissionLink a span{
+    font-size: 12px;
+}
+
+
+.MissionLink a:hover{
+    color:#4a4848;    
+}
+
+
+
+/* Надпись - информация о типе задачи справа*/
+
+/*#TaskContent span.Decription{
+    color:rgba(104, 160, 104, 0.56);
+
+}
+
+#TaskContent span.Decription:hover{
+    color:#68a068;
+}
+*/
+.InfoTask{
+    
+    color:#3c3c3c; 
+    font-size:12px; 
+    text-align:right;
+   
+    
+}
+
+.TaskItem{
+    color:black;
+    font-weight: bold;
+    
+}
+
+.Day .TaskItem{
+    background-color: lightgray;
+
+}
+
+
+
+
+
+
+
+.ScrollBoxMonth .ScrollBox{
+    width:180px;
+} 
+
+.ScrollBoxYear .ScrollBox{
+    width: 110px;
+}
+
+.ScrollBoxMonth {
+    
+}
+
+.ScrollBoxYear{
+    
+}
+
+/********************************************************/
+
+
+/* Блок прокрутки дней */
+div.ScrollPanel{        
+    display: inline-table;
+    
+}
+
+
+div.ScrollBox{  
+    width: 200px;     
+    display: inline-block;
+    vertical-align: middle;
+    white-space: nowrap;
+    overflow: hidden;
+    height: 20px;
+    
+    
+}
+
+
+
+
+
+/*.ShowWithOpacity:not([ng-hide]){
+    transition: opacity 0.5s linear all;
+    opacity: 0;
+}
+
+
+.ShowWithOpacity.ng-hide{
+    transition: opacity 0.5s linear all;
+    opacity: 0;
+}
+*/
+
+.HiddenOpacity{
+    opacity:0;
+}
+
+.Show2s{
+    animation-name: opacityToogle2s;
+    animation-duration: 1s;
+    animation-fill-mode:backwards;  
+    animation-timing-function: ease-in-out;
+}
+
+.ShowSometime{
+   animation-name: opacityToogle;
+    animation-duration: 2s;
+    animation-fill-mode:backwards;
+    
+    
+}
+
+
+.ShowSometime5s{
+   animation-name: opacityToogle;
+    animation-duration: 5s;
+    animation-fill-mode:backwards;
+    
+    
+}
+
+
+@keyframes opacityToogle{
+    0%{
+       opacity:1; 
+    }
+    70%{
+        opacity:1;
+    }
+    100%{
+        opacity:0;
+    }
+}
+
+@keyframes opacityToogle2s{ /*Цвет рамки в Remind при поиске через Назначенные дни*/
+    0%{
+       border-color: #585858;  
+       
+    }
+    20%{
+        border-color: #585858; 
+    }
+    90%{
+        border-color: #585858; 
+    }
+    100%{
+        border-color: none; 
+    }
+}
+
+
+div.DaysBox{
+    display: inline-table; 
+     overflow: hidden;
+    
+}
+
+
+div.DaysList{
+    display: inline-table;   
+    vertical-align: middle;
+    white-space: nowrap;
+     overflow: hidden;
+     margin-top: -3px;
+    transition: margin-left 0.3s linear 0s;
+
+}
+
+/*:not([class])*/
+div.DaysList div{    
+cursor: pointer;
+display: inline-block;
+
+/*transition: margin-left 0.3s linear 0s, color 0.2s ease-in 0.1s;*/
+color: #717171; 
+padding-right: 10px;
+
+/*No select*/
+  -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+     -khtml-user-select: none; /* Konqueror HTML */
+       -moz-user-select: none; /* Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+            user-select: none; /* Non-prefixed version, currently
+                                  supported by Chrome and Opera */
+
+}
+
+
+
+
+
+
+
+div.DaysList div.SelectedDay{
+ /*   transition: margin-left 0.3s linear 0s, color 0.2s ease-in 0.1s;*/
+    font-weight: bold;
+    color:#000000;       
+   
+}
+
+div.DaysList div.NonSelectedDay{
+    transition: margin-left 0.3s linear 0s, color 0.2s ease-in 0.1s;
+    font-weight:normal;
+    /*color:#d92f2f;       */
+    color:#c4c4c4;
+}
+
+.NewTask, .NewTask .TaskRemind a{
+    color: #afafaf;
+}
+
+.NewTaskName input {
+     color: #5f5f5f;
+}
+
+
+
+/* Inputs */
+/*.NewTaskName input, .TaskVolume input, .TaskUnit input, .NewTaskVolume input, .NewTaskUnit input, .NewTaskRepeat input{
+    height:30px;
+    font-size: 13px;
+    border: 0;
+    cursor: pointer;
+    padding-bottom: 10px;
+    padding-left: 0px;
+
+}
+
+.NewTaskVolume input{
+    width:70px;
+}
+
+ .NewTaskUnit input, .NewTaskRepeat input{
+    width:70px;
+}
+
+.NewTaskName input{
+        text-align: left;
+    width:245px; 
+    margin-left:0px;
+}
+
+td.TaskVolume input, td.TaskUnit input{
+text-align: center;
+width:90px;
+    background-color: aqua;
+}
+
+
+.TaskVolume, .TaskUnit{
+width:110px;
+    background-color: yellow;
+}
+*/
+
+.TaskVolume, .TaskUnit, .TaskRepeat, .TaskPieces, .TaskRemind, .NewTaskName, .NewChallengeName {
+    font-size: 12px;
+    /*background-color: yellow;*/
+    
+    
+}
+
+.Task .TaskVolume, .Task .TaskUnit, .Task .TaskRepeat, .Task .TaskPieces, .Task .TaskRemind,
+.NewTask .TaskVolume, .NewTask .TaskUnit, .NewTask .TaskRepeat, .NewTask .TaskRemind
+{
+    text-align: center;
+}
+
+
+
+
+.Task .TaskVolume input, .Task .TaskUnit input, .Task .TaskRepeat input, .Task .TaskPieces input, .Task .TaskRemind div,
+.NewTask .TaskVolume input, .NewTask .TaskUnit input, .NewTask .TaskRepeat input, .NewTask .TaskPieces input, .NewTask .TaskRemind input
+
+{
+    font-size: 12px;
+    /*background-color: aqua;*/
+    text-align: center;
+    cursor:pointer;
+    height:30px;
+}
+
+
+.Task .TaskPieces, .Task .TaskVolume{
+    height: 30px;
+}
+
+.NewTask .NewTaskName{
+    width:310px;
+    
+}
+
+.NewTask .NewTaskName input, .Task .TaskItem div{
+    width:310px;
+    cursor:pointer;
+}
+
+.NewTask .NewChallengeName input{
+    width:280px;
+    cursor:pointer;
+}
+
+.NewTask .TaskVolume input{
+    width:55px;
+}
+.NewTask .TaskUnit input{
+    width:75px;
+}
+.NewTask .TaskRepeat input{
+    width:55px;
+}
+
+.NewTask .TaskPieces input{
+    width:85px;
+}
+
+.NewTask .TaskRemind input{
+    width:85px;
+}
+
+
+.NewTask .TaskVolume{
+    width:55px;
+    
+    
+}
+.NewTask .TaskUnit{
+    width:75px;
+    
+}
+.NewTask .TaskRepeat{
+    width:55px;
+    
+}
+
+
+
+
+
+
+.Task .TaskPieces input{
+    width:50px;
+}
+
+
+.Task .TaskVolume input{
+    width:50px;
+}
+
+ .Task .TaskUnit input{
+    width:50px;
+}
+
+.Task .TaskRepeat input{
+    width:50px;
+}
+
+.Task .TaskRemind input{
+    width:85px;
+}
+
+
+.Task .TaskRemind input{
+    width:85px;
+}
+
+
+
+
+
+
+
+/*Напоминание*/
+.DayOfWeekRemind, .Day{
+    font-size:12px;
+    width: 50px;
+    height: 35px;
+   
+    
+}
+
+
+/*Регулярные дела*/
+tr.DayOfWeekChallenge{
+    height:35px;
+}
+
+tr.DayOfWeekChallenge td:not(.ShParameters):not(.AddingControl){
+    width:55px;   
+    font-size:12px;
+    text-align: center;
+}
+
+
+
+tr.DayOfWeekChallenge:not(.Time) td input{
+    width:50px;
+    font-size:12px;
+    text-align: center;
+    cursor: pointer;
+}
+
+
+/* Выпадающий блок задания конкретного времени начала*/
+tr.Time{
+display: none;
+    
+   
+}
+
+.HiddenCell{
+    display:none;
+}
+
+.TimeControl{
+    cursor:pointer;
+}
+
+
+}
+
+/* Выпадающий блок задания конкретного времени начала*/
+
+tr.Time td{    
+    font-size:12px;
+    
+}
+
+tr.Time input{
+    width:16px;
+    cursor: pointer;
+    text-align: center;
+    
+}
+
+td.ShParameters{
+    font-size:12px;
+    color: #868686;
+    width:70px;
+ text-align: left;    
+}
+
+
+
+
+#TaskContent a.list-group-item:hover .Name{
+color:black;
+    transition: color 0.1s linear 0s;
+}
+
+
+
+td.SelectedDates{
+    font-size:12px;
+    width:145px;
+  
+}
+
+div.SelectedDates{
+    height: 100%;
+    width:100%;
+    font-size:13px;
+    display: inline-block;
+    overflow-y: auto;
+    text-align: left;
+    overflow-x: hidden;
+    margin-bottom:0px;
+    
+}
+
+div.SelectedDates span{
+cursor: pointer;
+}
+
+div.SelectedDates :hover{
+background-color: lightgray;
+}
+
+/*------------------------*/
+.SelectedDatesModif{
+    font-size:13px;
+ 
+  
+}
+
+
+.SelectedDatesModif span{
+cursor: pointer;
+}
+
+.SelectedDatesModif tr :hover{
+background-color: lightgray;
+}
+
+
+
+
+
+
+.Task td{
+    text-align: left;
+    font-size: 13px;
+   
+}
+
+
+
+
+
+
+/* Вертикально сдвигающаяся надпись */
+div.AddingInfo{   
+    display: inline-block;
+    vertical-align: middle;
+    overflow: hidden;
+    height: 18px;
+   
+}
+
+.list-item-mission:hover .Info, .list-item-mission:hover .ActionsForTask{
+   transition: margin-top 0.2s ease-in 0.2s;
+   margin-top: -17px;
+}
+
+.list-item-mission:hover .Info{
+   transition: margin-top 0.2s ease-in 0.2s, opacity 0.1s linear 0.2s;
+   margin-top: -17px;
+    opacity: 0;
+}
+
+.Info{
+    font-size: 12px;
+    color: #9a9a9a;
+    float:left;
+    transition: margin-top 0.2s ease-in 0s;
+  /*  margin-top: -2px;*/
+    cursor: pointer;
+
+}
+
+.Info2{
+    font-size: 11px;
+    color: #9a9a9a;
+    float:left;
+    transition: margin-top 0.2s ease-in 0s;
+  /*  margin-top: -2px;*/
+    cursor: pointer;
+
+}
+
+.ActionsForTask{
+    font-size:12px; 
+    color:#c91111;    
+   
+    float:left;
+    transition: margin-top 0.3s ease-in 0s;
+ 
+    cursor: pointer;
+}
+
+
+/* ////Вертикально сдвигающаяся надпись */
+
+
+.AddingInfo .Edit{
+    color:#939292;
+}
+
+.AddingInfo .Edit:hover{
+    color:#2e2c2c;
+}
+
+.ScrollPanel .HiddenControl{
+    opacity: 0.2;
+    transition-property: opacity;
+    transition-duration: 0.5s;    
+}
+
+.ScrollPanel:hover .HiddenControl{    
+    opacity: 0.5;
+    transition-property: opacity;
+    transition-duration: 0.5s;
+}
+
+.ScrollPanel:hover .HiddenControl:hover{    
+    opacity: 1;
+}
+
+
+/*Градиент для ScrollBox*/
+  .size {
+    position: relative; /* Относительное позиционирование */
+   }
+
+   .size::after {
+       
+    content: ''; /* Выводим элемент */
+    position: absolute; /* Абсолютное позиционирование */
+    right: 0; top: 0; /* Положение элемента */
+    width: 30px; /* Ширина градиента*/
+    height: 100%; /* Высота родителя */
+    /* Градиент */
+       
+    background: -moz-linear-gradient(left,    rgba(245, 245, 245, 0.2), rgba(245, 245, 245, 0.9) 100%);
+    background: -webkit-linear-gradient(left, rgba(245, 245, 245, 0.2), rgba(245, 245, 245, 0.9) 100%);
+    background: -o-linear-gradient(left,      rgba(245, 245, 245, 0.2), rgba(245, 245, 245, 0.9) 100%);
+    background: -ms-linear-gradient(left,     rgba(245, 245, 245, 0.2), rgba(245, 245, 245, 0.9) 100%);
+    background: linear-gradient(left,         rgba(245, 245, 245, 0.2), rgba(245, 245, 245, 0.9) 100%);
+   }
+/* --Градиент для ScrollBox-- */
+
+
+
+
+
+input[readonly]{
+    cursor:pointer;
+}
+
+
+
+
+
+
+
+

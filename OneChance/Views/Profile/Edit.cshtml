@@ -1,0 +1,197 @@
+﻿
+@{
+    Layout = ViewBag.Layout;
+}
+
+@Styles.Render("~/CSS/ProfileCSS")
+
+<div id="HeaderMenu">
+    <!--Хлебные крошки -->
+
+    <div id="BreadCrumbs"  style="text-align:center; font-size: 16px; color: darkred; margin-left: -10px">
+        <b ng-if="@ViewBag.isNewProfile==true">Наполнение профиля</b>
+        <b ng-if="@ViewBag.isNewProfile==false">Редактирование анкеты</b>
+
+        @*<a get-create-mission-view={{MissionTypeFilter!=types.all?MissionTypeFilter.index:types.quicklist.index}} change-mission-type-filter="{{MissionTypeFilter!=types.all?MissionTypeFilter.abr:types.quicklist.abr}}" style="color:#b1aeae; cursor:pointer">
+             @Language.Create<span class="glyphicon glyphicon-star hidden  indicator" aria-hidden="true"></span>
+            </a>*@
+
+
+        <!--\ <input id="NewMission" maxlength="35" type=text placeholder="поиск">-->
+    </div>
+    <!--//Хлебные крошки -->
+
+</div>
+<!-- //Горизонтальная колонка сверху -->
+
+<div id="Missions" hidden>
+    <div id="profile" ng-controller="ProfileController" ng-init="getProfileData();" style="margin-top:20px;">
+
+        <div id="leftColumn">
+
+
+
+
+            <img id="avatar" src="" alt="" style="width:150px; ">
+
+            @*<img id="avatar" src="@ViewBag.User.AvatarPath" alt="Mountain View" style="width:150px; ">*@
+
+            <!--Ссылка для открытия меню выбора файла-->
+            <!--Скрытые инпуты для выбора файла-->
+            <input type="file" name="upload" id="upload_avatar" accept="image/jpeg,image/png"
+                   style="position: absolute; display: block; overflow: hidden; width: 0; height: 0; border: 0; padding: 0;"
+                   @*change-avatar='/Profile/UploadImageAvatar'*@
+                  onchange="angular.element(this).scope().SendToServer('/Profile/UploadImageAvatar')" 
+                   @*onchange="document.getElementById('upload_text').value = this.value;  SendToServer(@ViewBag.User.Id);"*@ />
+            <input type="text" readonly id="upload_text'" hidden
+                   onclick="document.getElementById('upload_avatar').click();" />
+            <!--скрытыми инпутами управляет ссылка-->
+            <div style="width:100%; text-align:center; font-size: 12px;"><a href="#" onclick="document.getElementById('upload_avatar').click(); return false;">сменить</a> </div>
+            <!--Ссылка для открытия меню выбора файла-->
+
+        </div>
+
+        <div id="rightColumn">
+            <span style="font-size:16px;"> Данные доступные другим пользователям</span>
+            <br />
+            <br />
+            <div class="input-group">
+
+                <input ng-model="User.Name" type="text" class="form-control" placeholder="{{(User==null || User.Name==null)?'Введите имя':''}}" aria-describedby="basic-addon1">
+
+                <span class="input-group-addon">Имя</span>
+            </div>
+            <div class="input-group">
+
+                <input ng-model="User.Surname" type="text" class="form-control" placeholder="{{(User==null || User.Surname==null)?'Введите фамилию':''}}" aria-describedby="basic-addon1">
+
+                <span class="input-group-addon">Фамилия</span>
+            </div>
+            <br />
+            <div class="input-group"  >
+                <!--Выпадающее меню и оглавление-->
+               
+                <a class="btn btn-default" style="width: 82px; border-width:0px; background-color:gainsboro; height:36px ">Страна</a><div class="dropdown" style="display: inline-block">
+                    <div class="btn btn-default  dropdown-toggle"  id="country" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" style="background-color:white">
+                        
+                            <input type="text" ng-model="User.CountryName"  get-countries  placeholder="Начните вводить"  style="text-align: left; width: 210px; border-width:0px; background-color:white ">
+                        
+                            @*<span class="caret"></span>*@
+                    </div>
+
+                    <ul class="dropdown-menu" aria-labelledby="country" style="max-height:150px; width: 235px; overflow-y:scroll; overflow-x:hidden">
+                        <li ng-repeat="country in countries |DropDownFilter: User.CountryName" apply-selection item="country"><a href="#">{{country.Name}}</a></li>
+                        
+                    </ul>
+                </div>
+                <!--Выпадающее меню и оглавление-->
+            </div>
+            <br />
+
+          
+            <div class="input-group" >
+                <!--Выпадающее меню и оглавление-->
+                <a class="btn btn-default" style="width: 82px; border-width:0px; background-color:gainsboro; height:36px ">Город</a><div class="dropdown" style="display: inline-block">
+                    <div class="btn btn-default  dropdown-toggle" id="city" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" style="background-color:white">
+                        <input ng-model="User.CityName" get-cities placeholder="Начните вводить"  style="text-align: left; width: 210px; border-width:0px; background-color:white ">
+                        @*<span class="caret"></span>*@
+                    </div>
+
+                    <ul class="dropdown-menu" aria-labelledby="city" style="max-height:150px; width: 235px; overflow-y:scroll; overflow-x:hidden">
+                        <li ng-repeat="city in cities |DropDownFilter: User.CityName"  apply-selection item="city"><a href="#">{{city.Name}} <span ng-if="city.Region!=null">&nbsp;({{city.Region}})</span></a></li>
+
+                    </ul>
+                </div>
+                <!--Выпадающее меню и оглавление-->
+            </div>
+            <br />
+
+            
+            <div class="input-group" style="display:block;">
+                <!--Выпадающее меню и оглавление-->
+                <a class="btn btn-default" style="width: 85px; border-width:0px; background-color:gainsboro ">Возраст</a><div class="dropdown" style="width: 235px; display:inline-block; border-width: 1px; border-color: #c7c7c7; border-style:solid">
+                    <a class="btn btn-default " style="text-align: left; width: 200px; border-width:0px; background-color:white " data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                       {{User.Age}}
+                    </a>
+                    <a class="btn btn-default" style="width: 25px; border-width:0px; background-color:white " data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"><span class="caret"></span></a>
+                    <ul class="dropdown-menu" style="height:150px; width: 235px; overflow-y:scroll">
+                        <li ng-repeat="n in range(3, 350)"><a style="padding-left:10px;  " need-change-dropdown-title ng-click="User.Age=n">{{n}}</a></li>
+                        @*<li class="displayNone"><a style="padding-left:10px" need-change-dropdown-title ng-click="Group.JoinOption=joinOptions.all">Все пользователи</a></li>*@
+                    </ul>
+                </div>
+                <!--//Выпадающее меню -->
+            </div>
+
+
+            <div class="input-group" style="display:block; margin-top:15px">
+                <!--Выпадающее меню и оглавление-->
+                <a class="btn btn-default" style="width: 85px; border-width:0px; background-color:gainsboro ">Пол</a><div class="dropdown" style="width: 235px; display:inline-block; border-width: 1px; border-color: #c7c7c7; border-style:solid">
+                    <a class="btn btn-default " style="text-align: left; width: 200px; border-width:0px; background-color:white " data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                        {{User.IsFemale==true?'Женский':'Мужской'}}
+                    </a>
+                    <a class="btn btn-default" style="width: 25px; border-width:0px; background-color:white " data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"><span class="caret"></span></a>
+                    <ul class="dropdown-menu" style="width: 235px; ">
+                        <li ng-class="{'displayNone': User.IsFemale==true}"><a style="padding-left:10px;" need-change-dropdown-title ng-click="User.IsFemale=true">Женский</a></li>
+                        <li ng-class="{'displayNone': User.IsFemale==false}"><a style="padding-left:10px;" need-change-dropdown-title ng-click="User.IsFemale=false">Мужской</a></li>
+                    </ul>
+                </div>
+                <!--//Выпадающее меню -->
+            </div>
+
+
+            <div class="input-group" style="display:block; margin-top:15px">
+                <!--Выпадающее меню и оглавление-->
+                <a class="btn btn-default" style="width: 85px; border-width:0px; background-color:gainsboro ">Язык</a><div class="dropdown" style="width: 235px; display:inline-block; border-width: 1px; border-color: #c7c7c7; border-style:solid">
+                    <a class="btn btn-default " style="text-align: left; width: 200px; border-width:0px; background-color:white " data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                        {{User.Language}}
+                    </a>
+                    <a class="btn btn-default" style="width: 25px; border-width:0px; background-color:white " data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"><span class="caret"></span></a>
+                    <ul class="dropdown-menu" style="width: 235px; ">
+                        <li><a style="padding-left:10px;" need-change-dropdown-title ng-click="User.Language='Русский'">Русский</a></li>
+                        <li><a style="padding-left:10px;" need-change-dropdown-title ng-click="User.Language='Английский'">Английский</a></li>
+                    </ul>
+                </div>
+                <!--//Выпадающее меню -->
+            </div>
+
+
+           
+
+            <div class="input-group">
+
+                <input type="text" class="form-control" placeholder="{{(User==null || User.PhoneNumber==null)?'Телефона нет':''}}" ng-model="User.PhoneNumber" aria-describedby="basic-addon1">
+                <span class="input-group-addon" id="basic-addon1">Телефон</span>
+
+            </div>
+
+            <div class="input-group">
+                <span class="input-group-addon" id="basic-addon1">О себе</span>
+
+                <input type="text" class="form-control" placeholder="{{(User==null || User.Description==null)?'Нет информации':''}}" aria-describedby="basic-addon1">
+            </div>
+            <br />
+            <br />
+            <button type="button" class="btn" style="margin-left: 0px; background-color: gray; color: white" ng-click="saveProfileToDb(@ViewBag.isNewProfile)">Сохранить <span class="glyphicon glyphicon-star hidden indicator" aria-hidden="true"></span></button>
+
+
+            <button type="button" class="btn btn-default" ng-if="@ViewBag.isNewProfile==true" ng-click="saveProfileToDb(@ViewBag.isNewProfile)">В пекло анкету</button>
+
+            <div style="display:inline-block">
+                <h5>
+                    <span class="label label-success HiddenOpacity Added">Сохранено</span>
+                    <span class="label label-success HiddenOpacity AlreadyExist">Произошла ошибка</span>
+                </h5>
+
+
+            </div>
+
+        </div>
+
+
+
+    </div>
+    <div>
+
+
+    </div>
+</div>

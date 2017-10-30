@@ -1,0 +1,680 @@
+﻿@using OneChance.Models
+@using Resources
+@{
+    Layout = null;
+}
+
+@using Microsoft.AspNet.Identity
+
+<!DOCTYPE html>
+<html lang="en" ng-app="onechanceApp">
+<head>
+    <meta charset="UTF-8">
+    <title>Dragons Hill</title>
+
+
+    <!-- Latest compiled and minified CSS -->
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    @Styles.Render("~/CSS/OneChanceCSS")
+    
+    @Scripts.Render("~/bundles/onechanceJS")
+
+
+
+
+
+
+
+</head>
+<body >
+    <!--div container -->
+    <div class="container" ng-controller="PageController" sent-event-when-scroll >
+
+        <!-- NavBAR -->
+        <nav class="navbar navbar-default">
+            <div class="container-fluid">
+                <!-- Имя проекта и кнопка развертывания меню на маленьких экранах -->
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="/Mission/Index?type={{types.all.abr}}" change-mission-type-filter="{{types.all.abr}}" keep-selected-menu-item>
+                        <span class="glyphicon glyphicon-tower" style="font-size:14px;opacity:1;"></span>
+                        Dragons Hill
+                        
+                    </a>
+                   
+                   
+                                         
+                    
+                    <!-- Кнопка, появляющаяся на маленьких экранах -->
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <!-- //Кнопка, появляющаяся на маленьких экранах -->
+                </div>
+
+                  
+
+                <!-- //Имя проекта и кнопка развертывания меню на маленьких экранах -->
+                <!-- Элементы, которые будут спрятаны на маленьких экранах и появляться после нажатия -->
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                  
+                   
+                        <div class="form-group">
+                            @*<input id="SearchString" type="text" class="form-control" placeholder="Поиск">*@
+                            <!-- Кнопка авторизации, вызывает модальное окно -->
+
+                         
+
+                            @if (Request.IsAuthenticated)
+                            {
+                            <form action="/Account/LogOff" class="navbar-right" id="logoutForm" method="post" class="navbar-form navbar-right">
+                                @Html.AntiForgeryToken()
+
+                                <ul class="nav navbar-nav navbar-right">
+                                   <li><a ng-click="getSearchingView(1)" > <span class="glyphicon glyphicon-search"></span></a></li>
+                                    <li>
+                                        @{ string name;
+                                            if (ViewBag.currentUser == null) { name = ""; } else {
+
+                                                if (ViewBag.currentUser.Name != null)
+                                                {
+                                                    name = ", " + (string)ViewBag.currentUser.Name;
+                                                }
+                                                else { name = ", "+ (string)ViewBag.currentUser.UserName; }
+                                            }
+                                            @Html.ActionLink(Language.Hello + name + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })
+                                            }
+                                    </li>
+                                 
+                                <li><a href="javascript:document.getElementById('logoutForm').submit()">@Language.Logout</a></li>
+
+                                    <li>
+                                        <!--Выпадающее меню -->
+                                        <div class="navbar-brand dropdown" style="font-size:11px; display:inline ">
+                                            <a data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" style="bottom:0px">@Language.Abr<span class="caret"></span></a>
+                                            <ul class="dropdown-menu" style="font-size:11px; min-width:70px ">
+                                                <li><a href="/Home/ChangeCulture?lang=ru">RU</a></li>
+                                                <li><a href="/Home/ChangeCulture?lang=en">EN</a></li>
+                                                <li><a href="/Home/ChangeCulture?lang=de">DE</a></li>
+
+                                            </ul>
+                                        </div>
+                                        <!--//Выпадающее меню -->
+                                    </li>
+                                </ul>
+                            </form>
+                            }
+
+
+                            else
+                            {
+                                <ul class="nav navbar-nav navbar-right">
+                                    <li><a ng-click="getSearchingView(1)"> <span class="glyphicon glyphicon-search"></span></a></li> 
+                                     <li><a  id="registerLink" data-toggle="modal" data-target="#RegistrationModal" style="cursor:pointer">@Language.Registration</a></li>
+                                    <li><a  id="loginLink" data-toggle="modal" data-target="#LoginModal" style="cursor:pointer">@Language.Login</a></li>
+                                 
+                                            <li>
+                                                <!--Выпадающее меню -->
+                                                <div class="navbar-brand dropdown" style="font-size:11px; display:inline ">
+                                                    <a data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" style="bottom:0px">@Language.Abr<span class="caret"></span></a>
+                                                    <ul class="dropdown-menu" style="font-size:11px; min-width:70px ">
+                                                        <li><a href="/Home/ChangeCulture?lang=ru">RU</a></li>
+                                                        <li><a href="/Home/ChangeCulture?lang=en">EN</a></li>
+                                                        <li><a href="/Home/ChangeCulture?lang=de">DE</a></li>
+
+                                                    </ul>
+                                                </div>
+                                                <!--//Выпадающее меню -->
+                                            </li>
+                                                                           
+                                </ul>
+                            }
+                            
+                            @*@Html.ActionLink("Регистрация", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })
+                            @Html.ActionLink("Выполнить вход", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })*@
+                            @*<button id="authorizationBtn" type="button" class="form-control btn-default" data-toggle="modal" data-target=".bs-example-modal-sm">Авторизоваться</button>*@
+                            <!-- //Кнопка авторизации, вызывает модальное окно -->
+                    
+                         
+                           
+                        
+                        
+                            </div>
+                    
+
+                    
+                    <!--//Форма поиска по намериниям -->
+                </div>
+
+             <!--indicatorTrigger
+                <span class="glyphicon glyphicon-star hidden indicator" aria-hidden="true"></span>   
+                 -->     
+                   
+                    <!-- //Элементы, которые будут спрятаны на маленьких экранах и появляться после нажатия -->
+                </div>
+        </nav>
+        <!-- //NavBAR -->
+
+
+        <div class="row">
+
+            <!-- Первая левая колонка с Меню -->
+            <div class="col-md-3 col-lg-3 col-sm-3 col-xs-3">
+                <!-- Меню слева -->
+                <div id="LeftMenu">
+                    <a href="#/Today" class="list-item" id="TodayMenuItem" keep-selected-menu-item='#TodayMenuItem'>
+                        
+                        <div><span class="indicatorTrigger" get-today-view="todayDate" type-of-status="{{Results.Done + Results.Active + Results.PartialDone}}">@Language.Today<span class="glyphicon glyphicon-star hidden indicator" aria-hidden="true"></span></span> <span class="badge" style="float:right">14</span></div>
+                        <div id="AnotherDay">
+                            <span class="indicatorTrigger" id="Tomorrow" keep-selected-menu-item='#TodayMenuItem' get-today-view="tomorrowDate"  type-of-status="{{Results.Done + Results.Active + Results.PartialDone}}">@Language.Tomorrow<span class="glyphicon glyphicon-star hidden indicator" aria-hidden="true"></span></span> @Language.Or <span  id="OtherDay" keep-selected-menu-item='#TodayMenuItem' ng-click="ShowCalendar()">@Language.OtherDay</span>
+                        </div>
+
+                    </a>
+
+                    <a class="list-item HiddenTrigger" keep-selected-menu-item='#m2' id=m2 style="cursor:pointer">
+                        <span class="menuItem indicatorTrigger" change-mission-type-filter="{{types.all.abr}}" get-mine-intents-view={{types.all.index}}>Мои Намерения <span class="glyphicon glyphicon-star hidden indicator" aria-hidden="true"></span></span>
+                        <span class="Hidden HalfOpacity indicatorTrigger" style="float:right; font-size: 12px" change-mission-type-filter="{{types.quicklist.abr}}" get-create-mission-view={{types.quicklist.index}}>создать<span class="glyphicon glyphicon-star hidden indicator" aria-hidden="true"></span></span>
+                    </a>                   
+
+                    <a href="#/SuggestMission" class="list-item" style="margin-top:10px" keep-selected-menu-item='#m6' id=m6 reload-page><span class="menuItem">Мои предложенные<span class="glyphicon glyphicon-star hidden  indicator" aria-hidden="true"></span></span><span class="badge"></span></a>
+                    <a href="#/SuggestMission" class="list-item" style="margin-top:10px" keep-selected-menu-item='#m6' id=m6 reload-page><span class="menuItem">Моя загруженность<span class="glyphicon glyphicon-star hidden  indicator" aria-hidden="true"></span></span><span class="badge"></span></a>
+                    
+                    <a href="#/SuggestMission" class="list-item" style="margin-top:10px" keep-selected-menu-item='#m6' id=m6 reload-page><span class="menuItem">Мои Друзья<span class="glyphicon glyphicon-star hidden  indicator" aria-hidden="true"></span></span><span class="badge"></span></a>
+                    <a href="#" on-click="getProfileCreateView()" class="list-item" style="margin-top:10px" keep-selected-menu-item=m7 id='#m7'><span class="menuItem">Моя страница<span class="glyphicon glyphicon-star hidden  indicator" aria-hidden="true"></span></span><span class="badge"></span></a>
+
+                    @if (Request.IsAuthenticated)
+                    {
+
+                    <a href="javascript:document.getElementById('logoutForm').submit()" class="list-item" style="margin-top:10px" keep-selected-menu-item=m8 id='#m8' reload-page>
+                    <span class="menuItem">@Language.Logout<span class="glyphicon glyphicon-star hidden indicator " aria-hidden="true"></span></span><span class="badge"></span></a>
+                    @*@Resources.Resource.Name*@
+                    }
+                    <!--    <a href="#" class="list-group-item">Статистика <span class="badge"></span></a>-->
+                    <!--   <a href="#" class="list-group-item">Мои настройки <span class="badge"></span></a>-->
+                    <!--  <a href="#" class="list-group-item">Мои профиль <span class="badge"></span></a>-->
+
+                </div>
+                <!-- //Меню слева -->
+            </div>
+            <!-- //Первая левая колонка с Меню -->
+            <!-- Колонка по центру с контентом -->
+           
+                @{string urlAfterLogin;
+                    if (ViewBag.isNewUser==true) { urlAfterLogin = "getProfileCreateView();"; } else { urlAfterLogin = "getSearchingView(1, null);"; }
+            <div class="col-md-6 col-lg-6 col-sm-6 col-xs-6" id="MainContent" ng-init = @urlAfterLogin >
+               
+                 <div id="Temp" get-data-after-scroll={{UrlForScrollGetData}} type-collection={{UrlForScrollTypeData}}>
+                    
+                    @*@Html.Partial("Create")*@
+                    @*@RenderBody()*@
+                    <!--  <ng-view></ng-view>-->
+                </div>
+
+                <!-- Модальные окна  - удалить, добавить, календарь и пр -->
+                <!-- Modal Calendar Всплывающее модальное окно-->
+                <!--ng-repeat = "itemMission in ModelNull"-->
+                <div class="modal fade" id="modalCalendar" role="dialog" aria-labelledby="myModalLabel" ng-controller="MissionController" 
+                    @*fire-when-modal-opened*@ ng-init="mission=missionCalendar; " can-auto-sets>
+                     @*fire-when-modal-opened can-get-one-mission>*@
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header"> @Language.ChooseOneOrMoreDays </div>
+                            <div class="modal-body">
+                                <!--Расписание для регулярных дел -->
+                                <div class="SheduleBox" style="margin-left:50px">
+                                    <!-- Details Напоминание (раскрывающийся блок с деталями mission) -->
+                                    <div class="DetailsBox MissionDetails">
+                                        <table class="ShDetails">
+                                            <tr>
+                                                <td class="AddingControl" style="width:16px;">
+                                                    <div class="AddingControl"></div>
+                                                </td>
+                                                <td colspan="7" class="Header">
+                                                    <!-- Горизонтально скроллируемое меню  -->
+                                                    <div class="ScrollPanel" ng-controller="CategoriesController" set-original-array="months" dispalyed-prop="month" currenttype="currentMonth">
+                                                        <!-- Тут важно не расставлять пробелов в списке -->
+                                                        <span class="glyphicon glyphicon-menu-left Scroll Left HiddenControl" ng-click="changeScroll(-1, itemsArr.length-1)"></span><div class="ScrollBox size" style="width:130px">
+                                                            <div class="DaysList"><div ng-repeat="item in itemsArr" ng-click="$parent.currentItem=$index; $parent.scrollPosition=$index;">{{item.name}}</div></div>
+                                                        </div>
+                                                        <span class="glyphicon glyphicon-menu-right Scroll Right HiddenControl" ng-click="changeScroll(1, itemsArr.length-1)"></span>
+
+                                                    </div>
+                                                    <!-- //Горизонтально скроллируемое меню -->
+                                                    <!-- Горизонтально скроллируемое меню  -->
+                                                    <div class="ScrollPanel" ng-controller="CategoriesController" set-original-array="years" dispalyed-prop="year" currenttype="currentYear">
+                                                        <!-- Тут важно не расставлять пробелов в списке -->
+                                                        <span class="glyphicon glyphicon-menu-left Scroll Left HiddenControl" ng-click="changeScroll(-1, itemsArr.length-1)"></span><div class="ScrollBox size" style="width:100px">
+                                                            <div class="DaysList"><div ng-repeat="item in itemsArr" ng-click="$parent.currentItem=$index; $parent.scrollPosition=$index;">{{item.year}}</div></div>
+                                                        </div>
+                                                        <span class="glyphicon glyphicon-menu-right Scroll Right HiddenControl" ng-click="changeScroll(1, itemsArr.length-1)"></span>
+                                                    </div>
+                                                    <!-- //Горизонтально скроллируемое меню -->
+
+                                                </td>
+                                                <td class="SelectedDates">
+                                                    <!--   <b>Назначенные дни</b> -->
+                                                </td>
+                                            </tr>
+
+                                            <tr class="Day">
+                                                <td class="AddingControl" style="width:16px;">
+                                                    <div class="AddingControl"></div>
+                                                </td>
+                                                <td colspan=7 rowspan="5" style=" vertical-align:top; width:315px">
+                                                    <div class="DaysOfWeekName">
+                                                        <div>Пн</div><div>Вт</div><div>Ср</div><div>Чт</div><div>Пт</div><div>Сб</div><div>Вс</div>
+                                                    </div>
+
+
+                                                    @*<div class="DaysOfWeek" repeat-day="atOnce" style=" width:315px">
+                                                        <div add-remove> <span class="TextDay"></span> </div>
+                                                    </div>*@
+
+                                                    <div class="DaysOfWeek" repeat-day="mission.StepOfMissions" style="width:315px">
+                                                        <!--action="false"-->
+                                                        <div add-remove>
+                                                            <span class="TextDay"></span>&nbsp;
+                                                        </div>
+                                                    </div>
+
+                                                </td>
+                                                <td rowspan="5" colspan=2 style="height:190px; vertical-align:top;">
+                                                    <div class="" style="margin-bottom:5px">
+                                                        <button type="button" class="btn btn-xs" add-remove-range="month"> Весь месяц </button>
+                                                    </div>
+                                                    <div class="" style="margin-bottom:5px">
+                                                        <button type="button" class="btn btn-xs" add-remove-range="holidays"> Выходные дни </button>
+                                                    </div>
+                                                    <div class="" style="margin-bottom:5px">
+                                                        <button type="button" class="btn btn-xs" add-remove-range="weekdays"> Будние дни </button>
+                                                    </div>
+                                                    <br />
+                                                    <div class="" style="margin-bottom:5px">
+                                                        <button type="button" class="btn btn-xs" add-remove-range="clearMonth"> Очистить месяц</button>
+                                                    </div>
+                                                    <div class="" style="margin-bottom:5px">
+                                                        <button type="button" class="btn btn-xs" add-remove-range="clearAll"> Очистить все</button>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                    <!-- //Details Напоминание (раскрывающийся блок с деталями Mission) -->
+                                </div>
+                            </div>
+                            <div class="modal-footer" ng-init="prepareCalendar(this)">
+                                <button type="button" class="btn btn-success"  get-some-days-view  type-of-status="{{Results.Done + Results.Active + Results.PartialDone}}"> Показать задачи</button>
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Закрыть</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- //Modal Calendar Всплывающее модальное окно-->
+                <!-- Modal Create Quicklist Category Всплывающее модальное окно-->
+                <div class="modal fade" role="dialog" modal-type="CategoryQuicklist" modal-action="create">
+                    <div class="modal-dialog " role="document" style="width:350px">
+                        <div class="modal-content">
+
+                            <div class="modal-body" style="font-size:18px; margin-top:15px; ">
+                                <div style="margin-bottom:10px">
+                                    <span>Создать новую категорию</span>
+                                </div>
+
+                                <form make-create-category id="FormCreateCategory">
+                                    <input type="text" placeholder="Имя категории" />
+                                    <!-- <input type="submit" value="Создать" />-->
+                                </form>
+
+                                <div style="font-size:18px; height:15px; position:relative">
+                                    <h5>
+                                        <span class="label label-success HiddenOpacity Added" style="position:absolute; left:0">Добавлено</span>
+                                        <span class="label label-success HiddenOpacity AlreadyExist" style="position:absolute; left:0">Категория уже существует</span>
+                                    </h5>
+
+                                </div>
+
+
+                            </div>
+
+                            <div class="modal-footer">
+
+                                <button type="button" class="btn btn-default" can-submit-form="#FormCreateCategory" style="float:left">Добавить (Enter)</button>
+                                <button type="button" class="btn btn-default" data-dismiss="modal" style="float:left">Закрыть</button>
+
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <!-- //Modal Create Quicklist Category Всплывающее модальное окно-->
+                <!-- Modal Create Day Challenge Всплывающее модальное окно-->
+                <div class="modal fade" role="dialog" modal-type="DayChallenge" modal-action="create">
+                    <div class="modal-dialog " role="document" style="width:350px">
+                        <div class="modal-content">
+
+                            <div class="modal-body" style="font-size:18px; margin-top:15px; margin-bottom:15px;">
+                                Добавить день
+                                <div style="margin-top:10px;">
+                                    <button type="button" class="btn btn-xs" make-create-day="After">После текущего дня</button>
+                                    <button type="button" class="btn btn-xs" make-create-day="First">В начало</button>
+                                    <button type="button" class="btn btn-xs" make-create-day="Last">В конец</button>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+
+                                <button type="button" class="btn btn-default" data-dismiss="modal" style="float:left">Закрыть</button>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <!-- //Modal CreateDayChallenge Всплывающее модальное окно-->
+                <!-- Modal Create Week Regular Всплывающее модальное окно-->
+                <div class="modal fade" role="dialog" modal-type="WeekRegular" modal-action="create">
+                    <div class="modal-dialog " role="document" style="width:350px">
+                        <div class="modal-content">
+
+                            <div class="modal-body" style="font-size:18px; margin-top:15px; margin-bottom:15px;">
+                                Добавить неделю
+                                <div style="margin-top:10px;">
+                                    <button type="button" class="btn btn-xs" make-create-week="After">После текущей недели</button>
+                                    <button type="button" class="btn btn-xs" make-create-week="First">В начало</button>
+                                    <button type="button" class="btn btn-xs" make-create-week="Last">В конец</button>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+
+                                <button type="button" class="btn btn-default" data-dismiss="modal" style="float:left">Закрыть</button>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <!-- //Modal Create Week Regular Всплывающее модальное окно-->
+                <!-- Modal CopyWeekRegular Всплывающее модальное окно-->
+                <div class="modal fade" role="dialog" modal-type="WeekRegular" modal-action="copy">
+                    <div class="modal-dialog " role="document" style="width:400px">
+                        <div class="modal-content">
+
+                            <div class="modal-body" style="font-size:18px; margin-top:15px; margin-bottom:15px;">
+                                Копировать текущую неделю <input type="number" min="1" max="99" size="2" style="display:inline-block; width:40px" ng-model="countweek" ng-init="countweek=1"> {{sufficsCtrl("разы", countweek)}}
+                                <div style="margin-top:10px;">
+                                    <button type="button" class="btn btn-xs" make-create-week="After" countweek={{countweek}}>После текущей недели</button>
+                                    <button type="button" class="btn btn-xs" make-create-week="First" countweek={{countweek}}>В начало</button>
+                                    <button type="button" class="btn btn-xs" make-create-week="Last" countweek={{countweek}}>В конец</button>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+
+                                <button type="button" class="btn btn-default" data-dismiss="modal" style="float:left">Закрыть</button>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <!-- //Modal CopyWeekRegular Всплывающее модальное окно-->
+                <!-- Modal CopyDayChallenge Всплывающее модальное окно-->
+                <div class="modal fade" role="dialog" modal-type="DayChallenge" modal-action="copy">
+                    <div class="modal-dialog " role="document" style="width:350px">
+                        <div class="modal-content">
+
+                            <div class="modal-body" style="font-size:18px; margin-top:15px; margin-bottom:15px;">
+                                Копировать текущий день <input type="number" min="1" max="99" size="2" style="display:inline-block; width:40px" ng-model="countday" ng-init="countday=1"> {{sufficsCtrl("разы", countday)}}
+                                <div style="margin-top:10px;">
+                                    <button type="button" class="btn btn-xs" make-create-day="After" countday={{countday}}>После текущего дня</button>
+                                    <button type="button" class="btn btn-xs" make-create-day="First" countday={{countday}}>В начало</button>
+                                    <button type="button" class="btn btn-xs" make-create-day="Last" countday={{countday}}>В конец</button>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+
+                                <button type="button" class="btn btn-default" data-dismiss="modal" style="float:left">Закрыть</button>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <!-- //Modal CopyDayChallenge Всплывающее модальное окно-->
+                <!-- Modal Delete Confirm Challenge-Regular-Quicklist Всплывающее модальное окно-->
+                <div class="modal fade" role="dialog" modal-type="ModalDelete" modal-action="delete">
+                    <div class="modal-dialog " role="document" style="width:350px">
+                        <div class="modal-content">
+
+                            <div class="modal-body" style="font-size:18px; margin-top:15px; margin-bottom:15px;">
+                                <span ng-show="currEditioningScope.currentCategory!=undefined">Подтвердите удаление категории "{{currEditioningScope.currentCategory.Category.Name}}"</span>
+                                <span ng-show="currEditioningScope.currentWeek!=undefined">Подтвердите удаление Недели {{currEditioningScope.currentWeek.Category.Name}}</span>
+                                <span ng-show="currEditioningScope.currentDay!=undefined">Подтвердите удаление Дня {{currEditioningScope.currentDay.Category.Name}}</span>
+                                <div style="margin-top:10px;">
+
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+
+                                <button type="button" class="btn btn-default" make-delete data-dismiss="modal">Да, в пекло</button>
+
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Отменить</button>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <!-- //Modal Delete Confirm Challenge-Regular-Quicklist Всплывающее модальное окно-->
+                <!-- /// Модальные окна  - удалить, добавить, календарь и пр -->
+
+
+                <!-- Modal Suggest Всплывающее модальное окно-->
+                <div class="modal fade" role="dialog" id="modalSuggest" >
+                    <div class="modal-dialog " role="document" style="width:550px; height: 400px">
+                        <div class="modal-content">
+
+                            <div class="modal-body" style="font-size:18px; margin-top:15px; margin-bottom:15px;">
+                                Поделиться миссией
+                                <div style="margin-top:10px;">
+                                    <button type="button" class="btn btn-xs" make-create-day="After">После текущего дня</button>
+                                    <button type="button" class="btn btn-xs" make-create-day="First">В начало</button>
+                                    <button type="button" class="btn btn-xs" make-create-day="Last">В конец</button>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+
+                                <button type="button" class="btn btn-default" data-dismiss="modal" style="float:left">Закрыть</button>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <!-- //Modal Suggest Всплывающее модальное окно-->
+
+
+
+            </div>
+            <!-- //Колонка по центру с контентом -->
+            <!-- Третья колонка справа -->
+            <div class="col-md-3 col-lg-3 col-sm-3 col-xs-3">
+                <!-- Блок уведомлений -->
+                <div id="Notification" style="height:60px; width:263px;margin-top:0px; font-size:13px; ">
+                    <div class="alert alert-warning alert-dismissible" role="alert" style="border-radius:0">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button>
+                        <span id="NotificationText">Здесь будут выводиться уведомления  </span>
+                    </div>
+                </div>
+                <!-- //Блок уведомлений -->
+            </div>
+            <!-- //Третья колонка справа -->
+
+                    }
+        </div>
+
+        <!-- Modal Регистрация href="/Account/Register"--> 
+        <div class="modal fade" id="RegistrationModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="myModalLabel">Регистрация нового пользователя </h4>
+                    </div>
+                    <div class="modal-body">
+                    <!-- Body -->
+                    
+                        <form action="/Account/Register" class="form-horizontal ng-pristine ng-valid" method="post" role="form">
+                            @Html.AntiForgeryToken()
+                            <h4>Создайте новую учетную запись</h4>
+                            <hr>
+                            <div class="validation-summary-valid text-danger" data-valmsg-summary="true">
+                                <ul>
+                                    <li style="display:none"></li>
+                                </ul>
+                            </div>                           
+                             <div class="form-group">
+                                <label class="col-md-2 control-label" for="Email">Почта</label>
+                                <div class="col-md-10">
+                                    <input class="form-control" data-val="true" data-val-email="The Адрес электронной почты field is not a valid e-mail address." data-val-required="The Адрес электронной почты field is required." id="Email" name="Email" value="" type="text">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-2 control-label" for="Password">Пароль</label>
+                                <div class="col-md-10">
+                                    <input class="form-control" data-val="true" data-val-length="Значение Пароль должно содержать не менее 6 символов." data-val-length-max="100" data-val-length-min="6" data-val-required="The Пароль field is required." id="Password" name="Password" type="password">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-md-2 control-label" for="ConfirmPassword">Пароль еще раз</label>
+                                <div class="col-md-10">
+                                    <input class="form-control" data-val="true" data-val-equalto="Пароль и его подтверждение не совпадают." data-val-equalto-other="*.Password" id="ConfirmPassword" name="ConfirmPassword" type="password">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-md-offset-2 col-md-10">
+                                    <input class="btn btn-default" value="Регистрация!" type="submit"> 
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">Закрыть</button>
+                                </div>
+                            </div>
+                        </form>
+
+
+
+                    </div>
+                
+                </div>
+            </div>
+        </div>
+        <!-- //Modal Регистрация href="/Account/Register"--> 
+
+        <!-- Modal Вход href="/Account/Login"-->
+        <div class="modal fade" id="LoginModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title" id="myModalLabel">Добро пожаловать в OneChance!</h4>
+                    </div>
+                    
+                    <div class="modal-body">
+                        <!-- Body -->
+                        <div class="row">
+                            <div class="col-md-8">
+                                <section id="loginForm">
+                                    <form action="/Account/Login" class="form-horizontal ng-pristine ng-valid" method="post" role="form">
+                                        @Html.AntiForgeryToken()
+                                        
+                                        
+                                        <input class="form-control" data-val="true" name="returnUrl" value="/Mission/Index" type="hidden">
+                                        <h4>Войти через логин и пароль</h4>
+                                        <hr>
+                                        <div class="form-group">
+                                            <label class="col-md-2 control-label" for="Email">Почта</label>
+                                            <div class="col-md-10">
+                                                <input class="form-control" data-val="true" data-val-email="The Адрес электронной почты field is not a valid e-mail address." data-val-required="The Адрес электронной почты field is required." id="Email" name="Email" value="" type="text">
+                                                <span class="field-validation-valid text-danger" data-valmsg-for="Email" data-valmsg-replace="true"></span>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-md-2 control-label" for="Password">Пароль</label>
+                                            <div class="col-md-10">
+                                                <input class="form-control" data-val="true" data-val-required="The Пароль field is required." id="Password" name="Password" type="password">
+                                                <span class="field-validation-valid text-danger" data-valmsg-for="Password" data-valmsg-replace="true"></span>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="col-md-offset-2 col-md-10">
+                                                <div class="checkbox">
+                                                    <input data-val="true" data-val-required="The Запомнить меня field is required." id="RememberMe" name="RememberMe" value="true" type="checkbox"><input name="RememberMe" value="false" type="hidden">
+                                                    <label for="RememberMe">Запомнить меня</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="col-md-offset-2 col-md-10">
+                                                <input value="Авторизоваться!" class="btn btn-default" type="submit">
+                                                <button type="button" class="btn btn-default" data-dismiss="modal">Закрыть</button>
+
+                                            </div>
+                                        </div>
+                                        <p>
+                                            
+                                            <a data-toggle="modal" data-dismiss="modal" data-target="#RegistrationModal" style="cursor:pointer">Регистрация нового пользователя</a>
+                                        </p>
+                                    </form>
+                                </section>
+                            </div>
+                            <div class="col-md-4">
+
+                                
+                                <section id="socialLoginForm">
+                                    @Html.Partial("../Account/_ExternalLoginsListPartial", new ExternalLoginListViewModel { ReturnUrl = "/Mission/Index" })
+                                </section>
+
+                                
+
+
+                                
+                            </div>
+                        </div>
+
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+        <!-- //Modal Вход href="/Account/Login--> 
+
+
+    </div>
+    <!--//div container -->
+
+
+
+
+
+
+
+
+
+</body>
+
+
+
+
+
+
+</html>
+
+
+
+
+
+
+
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}
+
+
+
+
+

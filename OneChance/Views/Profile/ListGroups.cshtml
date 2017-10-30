@@ -1,0 +1,105 @@
+﻿
+@{
+    Layout = ViewBag.Layout;
+}
+@Styles.Render("~/CSS/ProfileCSS")
+
+
+<div id="HeaderMenu">
+    <!--Хлебные крошки -->
+    <!-- href="#/MineMission/{{types.all.abr}}"  и убрать return false-->
+    <div id="BreadCrumbs"  style="text-align:center; font-size: 16px; color: darkred;">
+        <b>Группы</b>
+
+
+
+
+        <!--\ <input id="NewMission" maxlength="35" type=text placeholder="поиск">-->
+    </div>
+    <!--//Хлебные крошки -->
+
+
+</div>
+<!-- //Горизонтальная колонка сверху -->
+
+
+
+    <div id="profile" ng-controller="ProfileController" style="margin-top:20px;" ng-init="isOnlyMyGroups=true; getGroupsData(0)">
+    <table style="width:505px; margin-left:10px;">
+        <tr>
+            <td style="width:50%">
+                <button type="button" class="btn btn-xs" underline-watch="isOnlyMyGroups" condition={{isOnlyMyGroups==true}} style="cursor:pointer" ng-click="isOnlyMyGroups=true; getGroupsData(0)">Мои группы</button>
+                <button type="button" class="btn btn-xs" underline-watch="isOnlyMyGroups" condition={{isOnlyMyGroups==false}} style="cursor:pointer" ng-click="isOnlyMyGroups=false; getGroupsData(0)">Все группы</button>
+            </td>
+            <td style="width:50%; text-align:right">
+            </td>
+        </tr>
+
+        <tr>
+            <td colspan="2" style="padding-top:10px">
+                <div style="width:250px; height: 30px; margin-top:10px">
+                    <input ng-if="isOnlyMyGroups==false" placeholder="Поиск групп, введите имя" />
+                   
+                    <div ng-if="isOnlyMyGroups==true" href="/profile/EditGroup" ng-click="getViewByAjax($event);" style="font-size:13px; color:darkred; cursor: pointer">
+                        Создать группу 
+                    </div>   
+                    
+                     @*<span ng-if="isOnlyMyGroups==true" href="/profile/EditGroup" ng-click="getViewByAjax($event)" style="cursor: pointer">Создать группу</span>*@
+                </div>
+            </td>
+
+        </tr>
+
+    </table>
+
+    <!-- Поиск групп -->
+    <div id="Missions" hidden>
+        
+        <div ng-if="fillingArray.length==0 && isOnlyMyGroups==true" style="display: table-cell; text-align:center; vertical-align:middle; height: 120px; width: 505px; font-size: 18px">
+           Вы не состоите ни в одной из групп
+        </div>
+
+        <table style="width:505px; margin-top: 25px; margin-left:10px;">
+            <tr ng-repeat="group in fillingArray">
+                <td style="width: 75px">
+                    <div style="width: 75px; height: 75px; overflow:hidden; border-bottom-width: 7px; border-top-width: 7px; border-color:white; border-style: solid">
+                        <image style="width: 75px;" src="{{group.AvatarPath}}"></image>
+                    </div>
+                </td>
+                <td style="width: 250px; padding-left: 15px ">
+                    <div style="cursor: pointer" href="/profile/Group" ng-click="getViewByAjax($event, group.Id)"><b>{{group.Name}}</b></div>
+
+                    <div>{{group.ShortDescription}}</div>
+                    <div>Участников {{group.UsersCount}}</div>
+
+                </td>
+                <td style="text-align:right">
+                    <div ng-if="group.MyAffilation.Status==userInGroupStatus.cameOut || group.MyAffilation==null">
+                        <div><span style="cursor:pointer" ng-click="userInGroupChangeStatus(userInGroupStatus.wantsToJoin, group)">Вступить в группу</span></div>
+                        <div><span></span></div>
+                    </div>
+                    <div ng-if="group.MyAffilation.Status==userInGroupStatus.invited && user.MyAffilation.UserSender!=null">
+                        <div><span>Пользователь {{group.Community.UserSender.Name}} приглашает вас вступить</span></div>
+                        <div><span style="cursor:pointer" ng-click="userInGroupChangeStatus(userInGroupStatus.confirmed, group)">вступить</span></div>
+                    </div>
+                    <div ng-if="group.MyAffilation.Status==userInGroupStatus.wantsToJoin && group.MyAffilation.UserSender==null">
+                        <div><span>Вы подали заявку </span></div>
+                        <div><span style="cursor:pointer" ng-click="userInGroupChangeStatus(userInGroupStatus.cameOut, group)">отменить</span></div>
+                    </div>
+                    <div ng-if="group.MyAffilation.Status==userInGroupStatus.confirmed" style="cursor:pointer">
+                        <div><span>Вы состоите в группе</span></div>
+                        <div><span style="cursor:pointer" ng-click="userInGroupChangeStatus(userInGroupStatus.cameOut, group)">выйти</span></div>
+                    </div>
+
+
+                </td>
+            </tr>
+
+
+
+        </table>
+        <!-- Поиск групп -->
+
+
+    </div>
+</div>

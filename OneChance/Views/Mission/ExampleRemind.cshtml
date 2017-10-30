@@ -1,0 +1,111 @@
+﻿  <!-- Details Напоминание (раскрывающийся блок с деталями Mission) -->
+<div class="DetailsBox collapse MissionDetails" fire-when-mission-opened>
+    <div class="ContentMission">
+        <table class="ShDetails">
+            <tr class="Day">
+                <td class="AddingControl" style="width:16px;"><div class="AddingControl"></div></td>
+                <td colspan=7 rowspan="5" style=" vertical-align:top; width:315px">
+
+                    <div class="DaysOfWeekName" style="margin-left:0px;">
+                        <div>Пн</div><div>Вт</div><div>Ср</div><div>Чт</div><div>Пт</div><div>Сб</div><div>Вс</div>
+                    </div>
+                    <div class="DaysOfWeek" repeat-day="mission.StepOfMissions" style="width:315px; margin-left:0px; height: 180px">
+                        <!--action="false"-->
+                        <div add-remove action="false">
+                            <span class="TextDay"></span>&nbsp;<span class="DontShow RepeatS"><span class="glyphicon glyphicon-repeat Repeat" data-toggle="tooltip" data-placement="bottom" title="Повторять каждый месяц указанного числа" style="font-size:10px;"></span></span>
+                        </div>
+                    </div>
+
+
+
+                </td>
+                <td rowspan="5" colspan=2 style="height:190px; vertical-align:top;">
+                    <div>
+                        <div style="height: 30px;  display: table-cell; vertical-align: middle; ">
+                            <!-- Горизонтально скроллируемое меню  -->
+                            <div class="ScrollPanel" style="margin-left:0px; display:inline-block" ng-controller="CategoriesController" set-original-array="months" dispalyed-prop="month" currenttype="currentMonth">
+                                <!-- Тут важно не расставлять пробелов в списке -->
+                                <span class="glyphicon glyphicon-menu-left Scroll Left HiddenControl" ng-click="changeScroll(-1, itemsArr.length-1)"></span><div class="ScrollBox size" style="width:115px">
+                                    <div class="DaysList"><div ng-repeat="item in itemsArr" ng-click="$parent.currentItem=$index; $parent.scrollPosition=$index;">{{item.name}}</div></div>
+                                </div>
+                                <span class="glyphicon glyphicon-menu-right Scroll Right HiddenControl" ng-click="changeScroll(1, itemsArr.length-1)"></span>
+
+                            </div>
+                            <!-- //Горизонтально скроллируемое меню -->
+                        </div>
+                    </div>
+                    <div>
+
+                        <div style="height: 30px; display: table-cell; vertical-align: middle;">
+                            <!-- Горизонтально скроллируемое меню  -->
+                            <div class="ScrollPanel" style="margin-left:0px; display:inline-block" ng-controller="CategoriesController" set-original-array="years" dispalyed-prop="year" currenttype="currentYear">
+                                <!-- Тут важно не расставлять пробелов в списке -->
+                                <span class="glyphicon glyphicon-menu-left Scroll Left HiddenControl" ng-click="changeScroll(-1, itemsArr.length-1)"></span><div class="ScrollBox size" style="width:115px">
+                                    <div class="DaysList"><div ng-repeat="item in itemsArr" ng-click="$parent.currentItem=$index; $parent.scrollPosition=$index;">{{item.year}}</div></div>
+                                </div>
+                                <span class="glyphicon glyphicon-menu-right Scroll Right HiddenControl" ng-click="changeScroll(1, itemsArr.length-1)"></span>
+                            </div>
+                            <!-- //Горизонтально скроллируемое меню -->
+                        </div>
+                    </div>
+                </td>
+            </tr>
+        </table>
+
+        <table class="ShDetails SelectedDatesModif">
+
+            <tr class="NewTask" ng-show="mission.StepOfMissions.length>0">
+                <td class="AddingControl" style="width:20px;"><div class="AddingControl" style="width:20px"></div></td>
+                <td>
+                    <div style="width: 260px;overflow:hidden;">Дата</div>
+                </td>
+                <td class="TaskVolume">
+                    <div style="width: 90px;overflow:hidden;">{{(mission.Units==null||mission.Units=="")? "Количество":mission.Units}}</div>
+                </td>
+                <td class="TaskVolume">
+                    <div style="overflow:hidden; width: 70px">Выполнено</div>
+
+                </td>
+                <td>
+                    <div style="width: 40px"></div>
+                </td>
+            </tr>
+            <tr class="NewTask" ng-show="mission.StepOfMissions.length==0">
+                <td class="AddingControl" style="width:16px;"><div class="AddingControl"></div></td>
+                <td colspan="4">
+                    Еще не выбрано ни одной даты
+                </td>
+            </tr>
+
+            <tr class="Task" ng-repeat="item in mission.StepOfMissions" change-current-month-year={{item.DateStart.toDateString()}}>
+                <td></td>
+                <td class="TaskItem" style="text-align:left">
+
+
+                    <div style="text-align:left" ng-if="item.Repeats==null">{{item.DateStart.getDate()}} числа ежемесячно начиная с {{sufficsCtrlMonth(months[item.DateStart.getMonth()].name)}}&nbsp;{{item.DateStart.getFullYear()}}</div>
+                    <div style="text-align:left" ng-if="item.Repeats==0">{{item.DateStart.getDate()}}&nbsp;{{sufficsCtrlMonth(months[item.DateStart.getMonth()].name)}}&nbsp;{{item.DateStart.getFullYear()}}</div>
+
+                </td>
+                <td class="TaskVolume">
+
+                    {{item.Count}}
+
+                </td>
+                <td class="TaskVolume">
+                    {{(item.TaskOfIntent==null||item.TaskOfIntent.Count==0)?"--":item.TaskOfIntent.Count}}
+                </td>
+                <td style="padding-right: 7px; text-align:right">
+                    @*<span class="glyphicon glyphicon-pencil Trash" switch-edit=".Task" style="width:12px;font-size:11px"></span> <span style="width:12px;margin-left:3px;font-size:11px" class="glyphicon glyphicon-trash Trash " ng-click="removeRemindItem(item, $event);"></span>*@
+
+                </td>
+            </tr>
+
+        </table>
+
+    </div>
+    <h5>
+        <span class="label label-success HiddenOpacity DateMesage" style="">Чтобы изменить эту дату, перейдите на месяц начала ее действия (столбец справа) </span>
+    </h5>
+
+</div>
+<!-- //Details Напоминание (раскрывающийся блок с деталями Mission) -->  

@@ -1,0 +1,80 @@
+﻿
+
+    <!-- Горизонтальная колонка сверху -->
+    <div id="HeaderMenu" ng-init="typeOfStatus=Results.Done + Results.Active">
+
+        <!--Хлебные крошки -->
+        <div id="BreadCrumbs">
+            Задачи на Сегодня \ <input id="NewIntent" maxlength="35" type=text placeholder="Добавить">
+        </div>
+        <!--//Хлебные крошки -->
+        <!--Выпадающее меню -->
+        <div class="dropdown">
+            <a data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                <span ng-if="TypeOfItems==Results.Done + Results.Active + Results.PartialDone">Активные и выполненные</span>
+                <span ng-if="TypeOfItems==Results.Active + Results.PartialDone" >Активные</span>
+                <span ng-if="TypeOfItems==Results.Done" >Выполненные</span>
+                <span ng-if="TypeOfItems==Results.Cancel" >Отклоненные</span>
+                <span ng-if="TypeOfItems==Results.Done + Results.Cancel + Results.Active + Results.PartialDone" >Все</span>
+            </a>
+            <a data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"><span class="caret"></span></a>
+            <ul class="dropdown-menu" style="font-size:13px; ">
+                <li><a  get-today-view="todayDate" type-of-status="{{Results.Done + Results.Active + Results.PartialDone}}" >Активные и выполненные</a></li>
+                <li><a  get-today-view="todayDate" type-of-status="{{Results.Active + Results.PartialDone}}" >Активные</a></li>
+                <li><a  get-today-view="todayDate" type-of-status="{{Results.Done}}" >Выполненные</a></li>
+                <li><a  get-today-view="todayDate" type-of-status="{{Results.Cancel}}" >Отклоненные</a></li>
+                <li><a  get-today-view="todayDate" type-of-status="{{Results.Done + Results.Cancel + Results.Active + Results.PartialDone}}" >Все</a></li>
+            </ul>
+        </div>
+        <!--//Выпадающее меню -->
+
+    </div>
+    <!-- //Горизонтальная колонка сверху -->
+
+
+
+    <div class="list-group scrollList" id="Tasks">
+
+        <!-- задача --><!--ng-init="stepOfMission=mission.StepOfMission"-->
+        @*<div ng-repeat="intent in MineTodayIntentsArray" ng-init="mission=intent.Mission;" >*@
+
+        <!-- <a href="#" class="list-group-item" ng-repeat="item in itemIntent.originIntent.items | onlyWithNameAndType: currentTypeTask" > -->
+        @**@
+        
+        <a href="#" class="list-group-item" 
+            
+           ng-repeat="stepOfMission in fillingArray | StepOfMissionFilter: 'OnlyWithName'"> @*: TypeOfItems*@
+
+            <!-- Рендеринг конкретных View -->
+
+            <div ng-switch on="typesArr[stepOfMission.Mission.Type].abr">
+                <div ng-switch-when="quicklist">
+                    @Html.Partial("~/Views/Today/TodayQuicklist.cshtml")
+                </div>
+
+                <div ng-switch-when="challenge">
+                    @Html.Partial("~/Views/Today/TodayChallenge.cshtml")
+                </div>
+
+                <div ng-switch-when="regular">
+                    @Html.Partial("~/Views/Today/TodayRegular.cshtml")
+                </div>
+
+                <div ng-switch-when="remind">
+                    @Html.Partial("~/Views/Today/TodayRemind.cshtml")
+                </div>
+            </div>
+
+
+
+        </a>
+        <!-- //Сама задача -->
+        @*</div>*@
+
+
+
+
+
+    </div>
+
+

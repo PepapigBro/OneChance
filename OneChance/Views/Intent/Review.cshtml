@@ -1,0 +1,156 @@
+﻿
+    @*Layout = "~/Views/Shared/_OneChanceLayout.cshtml";*@
+
+@*script>
+    types.quicklist.src = 'CreateQuicklist';
+    types.challenge.src = 'CreateChallenge';
+    types.regular.src = 'CreateRegular';
+    types.remind.src = 'CreateRemind';
+
+
+
+</script>*@
+
+
+
+<!-- Горизонтальная колонка сверху -->
+<div id="HeaderMenu">
+    <!--Хлебные крошки -->
+    <div id="BreadCrumbs">
+       <b> Обзор намерения </b><!-- <input id="NewMission" maxlength="35" type=text placeholder="Добавить">-->
+    </div>
+    <!--//Хлебные крошки -->
+    <!--Выпадающее меню -->
+    <!--    <div class="dropdown">
+           <a  data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+           Все задачи
+           </a>
+           <a data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+           <span class="caret"></span>
+           </a>
+           <ul class="dropdown-menu" style="font-size:13px; ">
+              <li><a href="#">Актуальные</a></li>
+              <li><a href="#">Выполненные</a></li>
+              <li><a href="#">Отклоненные</a></li>
+              <li><a href="#">Отмеченные</a></li>
+           </ul>
+        </div>
+        -->
+    <!--//Выпадающее меню -->
+</div>
+<!-- //Горизонтальная колонка сверху -->
+
+@*ng-init="getEmptyTemplates()"*@
+<div id="TaskContent"  style="margin-left:20px;">
+
+    
+    <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ ИНТЕНТ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+
+   
+    <div ng-controller="MissionController" class="ItemMission" fire-when-show>
+
+        <!-- ng-show="creatingTypeMission==null" -->
+        <!-- Заголовок Mission-->
+        <a href="#" class="list-item-mission" style="background-color: rgba(219, 219, 219, 0.47); border-radius: 0;">
+            <table>
+                <tr>
+                    <td>
+
+                        <div class="TaskName EllipsisDots" style="width:350px">
+                            <span class="Name collapsed" show-details="MissionDetails">{{mission.Name}}</span>
+
+
+                        </div>
+                    </td>
+                    <td>
+                        <div class="InfoTask" show-details="Comments" onclick="return false">{{typesArr[mission.Type].name}}&nbsp;<span class="glyphicon glyphicon-cog" style="font-size:11px; color: darkred;" get-view-for-edit-mission={{mission.Id}}></span></div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="MissionLink" style="font-size:11px;">
+                            @**@
+                        <!-- Секция действий с Mission -->
+                        <div style="display:inline-table; ">
+                            <span href="#" class="UsersList" style="display: table-cell; vertical-align: middle; padding-right:3px;">{{mission.StatOfMission.AddStat}}</span>
+                            <div>
+                                <div class="Info2">Добавили</div>
+                            </div>
+                        </div> &nbsp;
+                        <div style="display:inline-table; ">
+                            <span href="#" class="UsersList" style="display: table-cell; vertical-align: middle; padding-right:3px;">{{mission.StatOfMission.MakeStat}}</span>
+                            <div>
+                                <div class="Info2">Выполняют</div>
+                            </div>
+                        </div> &nbsp;
+
+                        <div style="display:inline-table; ">
+                            <span href="#" class="UsersList" style="display: table-cell; vertical-align: middle; padding-right:3px;">{{intent.StatOfIntent.Observe}}</span>
+                            <div>
+                                <div class="Info2">Подписаны на вас</div>
+                            </div>
+                        </div> &nbsp;
+
+                    </div>
+                    </td>
+                    <td>
+
+                        <!-- Секция пользователя создавшего -->
+                        <div style=" font-size:12px; color:#8d8d8d; width:150px; ">
+                            <div style="float:right;  max-width:150px; text-align:right" class="Ellipsis">
+                                <span>{{mission.User.Name}}</span>
+                            </div>
+                        </div>
+                        <!-- //Секция пользователя создавшего// -->
+
+                    </td>
+                </tr>
+            </table>
+        </a>
+        <!-- //Заголовок Mission-->
+        <!-- Секция описания и мотивации -->
+        <div class="DetailsBox collapse Comments">
+            <blockquote style="font-size:12px; width:480px">
+                {{mission.Description}}
+                <image src="prev.jpg"></image>
+            </blockquote>
+        </div>
+        <!-- //Секция описания и мотивации// -->
+
+               <div ng-switch on="typesArr[mission.Type].abr">
+                    <div ng-switch-when="quicklist">
+                       @Html.Partial("ReviewQuicklist")
+                    </div>
+
+                    <div ng-switch-when="challenge">
+                        @Html.Partial("ReviewChallenge")
+                    </div>
+
+                    <div ng-switch-when="regular">
+                        @Html.Partial("ReviewRegular")
+                    </div>
+
+                    <div ng-switch-when="remind">
+                        @Html.Partial("ReviewRemind")
+                    </div>
+                </div>
+                @*<div ng-include="mission.type.src"></div>*@
+                @*<div ng-include="'Createchallenge.html'"></div>*@
+            </div>
+
+
+
+            <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~// ИНТЕНТ //~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+
+
+
+
+
+
+
+
+
+
+        </div>
+
+

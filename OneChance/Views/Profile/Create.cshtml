@@ -1,0 +1,119 @@
+﻿
+@{
+    Layout = null;
+}
+
+@Styles.Render("~/CSS/ProfileCSS")
+
+<div id="profile"  ng-controller="ProfileController" >
+
+    <div id="leftColumn">
+        
+       
+        @{ string path = "";
+
+            if (ViewBag.User != null && ViewBag.User.AvatarPath != null) { path = ViewBag.User.AvatarPath; }
+            else { path = "../UploadsPicture/noimage.jpg"; }
+
+            <img id="avatar" src="@path" alt="Mountain View" style="width:150px; ">
+        }
+
+        @*<img id="avatar" src="@ViewBag.User.AvatarPath" alt="Mountain View" style="width:150px; ">*@
+
+        <!--Ссылка для открытия меню выбора файла-->
+        <!--Скрытые инпуты для выбора файла-->
+        <input type="file" name="upload" id="upload_avatar" accept="image/jpeg,image/png"
+               style="position: absolute; display: block; overflow: hidden; width: 0; height: 0; border: 0; padding: 0;"
+               change-avatar
+               @*onchange="document.getElementById('upload_text').value = this.value;  SendToServer(@ViewBag.User.Id);"*@ />
+        <input type="text" readonly id="upload_text'" hidden
+               onclick="document.getElementById('upload_avatar').click();" />
+        <!--скрытыми инпутами управляет ссылка-->
+        <div style="width:100%; text-align:center; font-size: 12px;"><a href="#" onclick="document.getElementById('upload_avatar').click(); return false;">сменить</a> </div>
+        <!--Ссылка для открытия меню выбора файла-->
+
+    </div>
+
+    <div id="rightColumn">
+        <span style="font-size:16px;"> Ваши данные, которые будут видны другим пользоватям</span>
+        <br/>
+        <br/>
+        <div class="input-group">
+            @{string placeholder = ""; 
+                    if (ViewBag.User != null && ViewBag.User.Name != null) { placeholder = ViewBag.User.Name; } else { placeholder = "Введите имя"; }
+            <input ng-model="User.Name"  type="text" class="form-control"   placeholder="@placeholder" aria-describedby="basic-addon1">
+             }
+            <span class="input-group-addon" >Имя</span>
+        </div>
+        <div class="input-group">
+            @{
+                if (ViewBag.User != null && ViewBag.User.Surname != null) { placeholder = ViewBag.User.Surname; } else { placeholder = "Введите фамилию"; }
+            <input ng-model="User.Surname"  type="text" class="form-control" placeholder="@placeholder" aria-describedby="basic-addon1">
+                }
+            <span class="input-group-addon" >Фамилия</span>
+        </div>
+        <br/>
+        <div class="input-group">
+
+            <span class="input-group-addon" id="basic-addon1">Страна</span>
+@{if (ViewBag.User != null && ViewBag.User.Country != null) { placeholder = ViewBag.User.Country; } else { placeholder = "Не указана"; }
+            <input type="text" class="form-control" placeholder=""placeholder" ng-model="User.Country" aria-describedby="basic-addon1">
+    }
+        </div>
+        <div class="input-group">
+            <span class="input-group-addon" id="basic-addon1">Город</span>
+@{if (ViewBag.User != null && ViewBag.User.Sity != null) { placeholder = ViewBag.User.Sity; } else { placeholder = "Не известен"; }
+            <input type="text" class="form-control" placeholder="@placeholder" ng-model="User.Sity" aria-describedby="basic-addon1">
+    }
+        </div>
+        <br/>
+        <div class="input-group" style="display:inline-block">
+            <span class="input-group-addon" style="width: 100px"  id="basic-addon1">Возраст</span>
+
+            <input type="text" class="form-control" style="width: 100px" placeholder="25" ng-model="User.Age" aria-describedby="basic-addon1">
+        </div>
+
+        <div class="input-group" style="display:inline-block">
+            <span class="input-group-addon" style="width: 100px"  id="basic-addon1">Язык</span>
+            <input type="text" class="form-control" style="width: 100px" placeholder="русский" ng-model="User.Language" aria-describedby="basic-addon1">
+        </div>
+
+        <div class="input-group">
+@{if (ViewBag.User != null && ViewBag.User.PhoneNumber != null) { placeholder = ViewBag.User.PhoneNumber; } else { placeholder = "Не задан"; }
+            <input type="text" class="form-control" placeholder="@placeholder" ng-model="User.PhoneNumber" aria-describedby="basic-addon1">
+    }
+            <span class="input-group-addon" id="basic-addon1">Телефон</span>
+            
+        </div>
+       
+        <div class="input-group">
+            <span class="input-group-addon" id="basic-addon1">О себе</span>
+@{if (ViewBag.User != null && ViewBag.User.Description != null) { placeholder = ViewBag.User.Description; } else { placeholder = "Нет информации"; }
+            <input type="text" class="form-control" placeholder="@placeholder" aria-describedby="basic-addon1">
+    }
+        </div>
+        <br />
+        <br />
+        <button type="button" class="btn" style="margin-left: 0px; background-color: gray; color: white" save-profile-to-db>Сохранить <span class="glyphicon glyphicon-star hidden indicator" aria-hidden="true"></span></button>
+        @if (ViewBag.User == null || ViewBag.User.Name == null)
+        {
+        <button type="button" class="btn btn-default" >В пекло анкету</button>
+        }
+        <div style="display:inline-block">
+            <h5>
+                <span class="label label-success HiddenOpacity Added">Сохранено</span>
+                <span class="label label-success HiddenOpacity AlreadyExist">Произошла ошибка</span>
+            </h5>
+
+
+        </div>
+        
+    </div>
+
+   
+
+    </div>
+    <div>
+       
+
+</div>

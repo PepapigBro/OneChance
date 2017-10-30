@@ -1,0 +1,126 @@
+﻿
+
+
+    <!-- Details Челлендж (раскрывающийся блок с деталями Mission) -->
+    <div class="DetailsBox collapse MissionDetails">
+    <div class="ContentMission" style="width: 505px">
+        <table class="ShDetails" style="width: 505px; margin-left: 0px">
+            <tr>
+
+                <td colspan="6" class="Header">
+
+                    <!-- Горизонтально скроллируемое меню  -->
+                    <div class="ScrollPanel" ng-controller="CategoriesController" set-original-array="mission.StepOfMissions" dispalyed-prop="Category.Name" currenttype="currentDay" watchsuffics="день">
+                        <!-- Тут важно не расставлять пробелов в списке -->
+                        <span class="glyphicon glyphicon-menu-left Scroll Left HiddenControl" ng-click="changeScroll(-1, itemsArr.length-1)"></span><div class="ScrollBox size">
+                            <div class="DaysList"><div ng-repeat="item in itemsArr" ng-click="$parent.currentItem=$index; $parent.scrollPosition=$index;" >{{$index+1}}  день</div></div>
+                        </div>
+                        <span class="glyphicon glyphicon-menu-right Scroll Right HiddenControl" ng-click="changeScroll(1, itemsArr.length-1)"></span>
+                    </div>
+                    <!-- //Горизонтально скроллируемое меню -->
+                    <!--Скрытые элементы управления - удалить копировать добавить  -->
+                    <div style="display:inline-table;  float: right ">
+
+
+                        <div>
+                            <!--    <div class="Info" ><span class="glyphicon glyphicon-option-vertical"></span>  {{UniqueArrayScrollPanel.length}} {{sufficsCtrl("день", UniqueArrayScrollPanel.length)}} </div>
+                              <div style="height:16px;"></div>-->
+
+
+
+                            <button type="button" class="btn btn-xs" link-modal="DayChallenge" action-modal="create"><span class="glyphicon glyphicon-plus" style="font-size:11px"></span></button>
+
+                            <button type="button" class="btn btn-xs" link-modal="DayChallenge" action-modal="copy"><span class="glyphicon glyphicon-duplicate" style="font-size:11px"></span></button>
+
+
+                            <button ng-hide="UniqueArrayScrollPanel.length==1" type="button" class="btn btn-xs" link-modal="ModalDelete" action-modal="delete"><span class="glyphicon glyphicon-trash" style="font-size:11px"></span></button>
+
+                            @*<button type="button" class="btn btn-success btn-xs"> Сохранить</button>*@
+
+                        </div>
+
+                    </div>
+                    <!--Скрытые элементы управления - удалить копировать добавить  -->
+
+                </td>
+
+                <td style="width:9px"><div style="width:9px"></div></td>
+
+            </tr>
+
+
+
+
+            <tr class="NewTask">
+
+                <td class="AddingControl"><div class="AddingControl"></div></td>
+                <td class="NewTaskName">
+                    <form add-item>
+                        <input style="width:290px;" type="text"  placeholder="Новая задача">
+                    </form>
+                </td>
+                <td class="TaskUnit" >@*<input type="text" placeholder="Единицы">*@</td>
+                <td class="TaskVolume"colspan="2"><div ng-show="itemsCountAtConcreteCategory>0" style="overflow:hidden; width: 70px">{{(mission.Units==null||mission.Units=="")? "Количество":mission.Units}}</div></td>
+                
+                @*<td class="TaskRepeat"><input type="text" placeholder="Повторы"></td>*@
+                <td colspan=2><div style="width:40px"></div></td>
+            </tr>
+
+
+
+
+            <tr class="Message" ng-show="checkExisting(nameNewItem, currentDay.day)">
+                <td class="AddingControl Header">
+                    <div class="AddingControl"></div>
+                </td>
+                <td colspan="6">
+                    <div style="width:100%; overflow:hidden">
+                        <h5> <span class="label label-success">Задача уже существует, будут увеличены повторы</span></h5>
+                    </div>
+                </td>
+            </tr>
+
+
+
+
+            <tr class="Task" ng-repeat="item in mission.StepOfMissions|TaskFilterCategory:$parent.currentDay:this">
+                <td class="AddingControl"></td>
+                <td class="TaskItem" style="">
+                    <div style="overflow: hidden; text-align:left; width:305px">
+                        <input readonly="readonly" cant-focus style="text-align:left; width:305px; " ng-model="item.Name.Text" />
+                    </div>
+                </td>
+                <td class="TaskUnit"></td>
+                <td class="TaskVolume" colspan="2">
+                    <input readonly="readonly" cant-focus type="text" placeholder="--" ng-model="item.Count" only-digits="7" style="width: 70px; display: inline-block;  text-align:center">
+                </td>
+
+                @*<td class="TaskRepeat">
+                <input type="text" placeholder="--" ng-model="item.Repeats" only-digits="7">
+
+
+            </td>*@
+                <td colspan=2 style="padding-right: 7px; text-align:right">
+                    <span class="glyphicon glyphicon-pencil Trash" switch-edit=".Task" style="width:12px;font-size:11px"></span> <span style="width:12px;margin-left:3px;font-size:11px" class="glyphicon glyphicon-trash Trash " ng-click="removeItem(item)"></span>
+
+                </td>
+            </tr>
+
+            
+            <tr ng-if="itemsCountAtConcreteCategory==0" >
+                <td class="AddingControl"></td>
+                <td colspan=4 style="text-align:center; vertical-align:bottom; font-size:13px; color: #a5a5a5">
+                    
+
+                    <div style="height: 25px;margin-top: 5px;">Еще не создано ни одной задачи</div>
+                </td>
+                <td colspan=2></td>
+            </tr>
+
+
+
+        </table>
+    </div>
+    <div class="Appendix"></div>
+</div>
+    <!-- //Details Челлендж (раскрывающийся блок с деталями Mission) -->

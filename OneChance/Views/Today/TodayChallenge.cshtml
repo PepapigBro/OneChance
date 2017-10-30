@@ -1,0 +1,51 @@
+﻿<table style="width: 485px" class="ContentOfTask" ng-class="{'ItsDone': stepOfMission.TaskOfIntent.Result == Results.Done && stepOfMission.TaskOfIntent.Count>=stepOfMission.Count, 'ItsForget': stepOfMission.TaskOfIntent.Result == Results.Cancel}">
+
+
+    <tr>
+        <td style="width:250px;">
+            <div class="ItemTaskName StrikeAble" style="width:250px; overflow: hidden"><span show-btns-control-for-task>{{stepOfMission.Name.Text}}</span></div>
+        </td>
+        <td style="width:100%"><div style="width:100%"></div></td>
+        <td style="text-align:right; width:80px;">
+            <div class="ItemInfoTask" style="width:80px; overflow:hidden; text-align:right">  {{stepOfMission.Mission.Units}}:&nbsp;</div>
+        </td>
+        <td style="white-space:nowrap;">
+            <div style="text-align:right" ng-if="stepOfMission.Count>0"> необходимо {{stepOfMission.Count}}</div>
+            <div style="text-align:right" ng-if="stepOfMission.Count==null||stepOfMission.Count==0"> предел не задан</div>
+        </td>
+
+    </tr>
+
+
+    <tr>
+        <td colspan="2">
+            <div class="ItemMissionLink" style=""> <a href="#" get-review-view>{{stepOfMission.Mission.Name}}, день {{stepOfMission.Category.Name}}</a> </div>
+        </td>
+
+
+        <td colspan="2" style="white-space:nowrap;">
+            <div style="text-align:right" ng-if="stepOfMission.TaskOfIntent.Count>0">Выполнено {{stepOfMission.TaskOfIntent.Count}}</div>
+            <div style="text-align:right" ng-if="stepOfMission.TaskOfIntent==null||stepOfMission.TaskOfIntent.Count==0||stepOfMission.TaskOfIntent.Count==null">Еще ничего не сделано</div>
+        </td>
+    </tr>
+
+
+
+
+
+</table>
+
+<!-- Кнопки "Сделано", "Забыть на сегодня", "Назад", "Input"  -->
+<div class="input-group BtnsDoneConfirm" style="width: 485px; background-image: url('/UploadsPicture/360_07.png'); background-repeat: repeat;">
+    <span class="input-group-btn btn-group-sm">
+        <button type="button" class="btn btn-default  WellDone" complete-task={{Results.PartialDone}}>Сделано</button>
+        <button type="button" class="btn btn-default Forget" complete-task={{Results.Cancel}}>Забыть на сегодня</button>
+        <button type="button" class="btn btn-default Cancel" close-btns-control-for-task><span class="glyphicon glyphicon-remove" style="font-size:12px;"></span></button>
+    </span>
+    <!--<input type="text" class="InputRealVolume"  placeholder="30 км. Изменить">-->
+    <div class="input-group input-group-sm " style="float:right; width: 150px;">
+        <span class="input-group-addon" id="sizing-addon3" style=" border-radius:0px">Объем</span>
+        <input style=" border-radius:0px" type="text" class="form-control InputRealVolume" placeholder="Выполнено" aria-describedby="sizing-addon3" value="1">
+    </div>
+</div>
+<!-- //Кнопки "Сделано", "Забыть на сегодня", "Назад", "Input"  -->

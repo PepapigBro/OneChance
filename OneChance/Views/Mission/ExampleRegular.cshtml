@@ -1,0 +1,102 @@
+﻿                     <!-- Details Регулярное дело (раскрывающийся блок с деталями Mission) -->
+<div class="DetailsBox collapse MissionDetails">
+    <div class="ContentMission">
+
+        <table class="ShDetails" style="background:white; ">
+
+
+            <tr class="ScrollBoxWeek">
+                <td style="width:10px;"><div style="width:10px;"></div></td>
+                <td colspan="9" class="Header HeaderW">
+
+
+
+
+                    <!-- Горизонтально скроллируемое меню  -->
+                    <div class="ScrollPanel" ng-controller="CategoriesController" set-original-array="mission.StepOfMissions" dispalyed-prop="Category.Name" currenttype="currentWeek" watchsuffics="неделя">
+                        <!-- Тут важно не расставлять пробелов в списке -->
+                        <span class="glyphicon glyphicon-menu-left Scroll Left HiddenControl" ng-click="changeScroll(-1, itemsArr.length-1)"></span><div class="ScrollBox size">
+                            <div class="DaysList"><div ng-repeat="item in itemsArr" ng-click="$parent.currentItem=$index; $parent.scrollPosition=$index;">{{$index+1}} неделя</div></div>
+                        </div>
+                        <span class="glyphicon glyphicon-menu-right Scroll Right HiddenControl" ng-click="changeScroll(1, itemsArr.length-1)"></span>
+                    </div>
+                    <!-- //Горизонтально скроллируемое меню -->
+
+
+
+
+                    <div style="display:inline-table; float: right ">
+
+
+
+
+                        @*<div>
+                                <button type="button" class="btn btn-xs" link-modal="WeekRegular" action-modal="create"><span class="glyphicon glyphicon-plus" style="font-size:11px"></span></button>
+
+                                <button type="button" class="btn btn-xs" link-modal="WeekRegular" action-modal="copy"><span class="glyphicon glyphicon-duplicate" style="font-size:11px"></span></button>
+
+
+                                <button ng-hide="UniqueArrayScrollPanel.length==1" type="button" class="btn btn-xs" link-modal="ModalDelete" action-modal="delete"><span class="glyphicon glyphicon-trash" style="font-size:11px"></span></button>
+
+                                <button type="button" class="btn btn-success btn-xs"> Сохранить</button>
+
+                            </div>*@
+
+
+
+                    </div>
+
+                </td>
+                <td rowspan=4 style="width:9px"><div style="width:9px"></div></td>
+            </tr>
+
+            <tr class="DayOfWeekChallenge">
+                <td style="width:10px;"><div style="width:10px;"></div></td>
+                <td class="AddingControl Header"><div class="AddingControl"></div></td>
+                <td class="ShParameters"></td>
+                <td class="Mn"><b>Пн</b></td>
+                <td class="Tu"><b>Вт</b></td>
+                <td class="Wn"><b>Ср</b></td>
+                <td class="Th"><b>Чт</b></td>
+                <td class="Fr"><b>Пт</b></td>
+                <td class="St"><b>Сб</b></td>
+                <td class="Sn"><b>Вс</b></td>
+            </tr>
+
+            <tr class="DayOfWeekChallenge">
+                <td style="width:10px;"><div style="width:10px;"></div></td>
+                <td class="AddingControl"></td>
+                <td class="ShParameters">{{mission.Units}}</td>
+                <td class="Mn">{{mission.StepOfMissions[(toInt(currentWeek.Category.Name)-1)*7+0].Count}}<span ng-if="mission.StepOfMissions[(toInt(currentWeek.Category.Name)-1)*7+0].Count==null" style="color:lightgray">--</span></td>
+                <td class="Tu">{{mission.StepOfMissions[(toInt(currentWeek.Category.Name)-1)*7+1].Count}}<span ng-if="mission.StepOfMissions[(toInt(currentWeek.Category.Name)-1)*7+1].Count==null" style="color:lightgray">--</span></td>
+                <td class="Wn">{{mission.StepOfMissions[(toInt(currentWeek.Category.Name)-1)*7+2].Count}}<span ng-if="mission.StepOfMissions[(toInt(currentWeek.Category.Name)-1)*7+2].Count==null" style="color:lightgray">--</span></td>
+                <td class="Th">{{mission.StepOfMissions[(toInt(currentWeek.Category.Name)-1)*7+3].Count}}<span ng-if="mission.StepOfMissions[(toInt(currentWeek.Category.Name)-1)*7+3].Count==null" style="color:lightgray">--</span></td>
+                <td class="Fr">{{mission.StepOfMissions[(toInt(currentWeek.Category.Name)-1)*7+4].Count}}<span ng-if="mission.StepOfMissions[(toInt(currentWeek.Category.Name)-1)*7+4].Count==null" style="color:lightgray">--</span></td>
+                <td class="St">{{mission.StepOfMissions[(toInt(currentWeek.Category.Name)-1)*7+5].Count}}<span ng-if="mission.StepOfMissions[(toInt(currentWeek.Category.Name)-1)*7+5].Count==null" style="color:lightgray">--</span></td>
+                <td class="Sn">{{mission.StepOfMissions[(toInt(currentWeek.Category.Name)-1)*7+6].Count}}<span ng-if="mission.StepOfMissions[(toInt(currentWeek.Category.Name)-1)*7+6].Count==null" style="color:lightgray">--</span></td>
+            </tr>
+
+            @*<tr class="DayOfWeekChallenge">
+                    <td style="width:10px;"><div style="width:10px;"></div></td>
+                    <td class="AddingControl"></td>
+                    <td class="ShParameters">Повторы</td>
+                    <td class="Mn">{{mission.StepOfMissions[(toInt(currentWeek.Category.Name)-1)*7+0].Repeats}}<span ng-if="mission.StepOfMissions[(toInt(currentWeek.Category.Name)-1)*7+0].Repeats==null" style="color:lightgray">--</span></td>
+                    <td class="Tu">{{mission.StepOfMissions[(toInt(currentWeek.Category.Name)-1)*7+1].Repeats}}<span ng-if="mission.StepOfMissions[(toInt(currentWeek.Category.Name)-1)*7+1].Repeats==null" style="color:lightgray">--</span></td>
+                    <td class="Wn">{{mission.StepOfMissions[(toInt(currentWeek.Category.Name)-1)*7+2].Repeats}}<span ng-if="mission.StepOfMissions[(toInt(currentWeek.Category.Name)-1)*7+2].Repeats==null" style="color:lightgray">--</span></td>
+                    <td class="Th">{{mission.StepOfMissions[(toInt(currentWeek.Category.Name)-1)*7+3].Repeats}}<span ng-if="mission.StepOfMissions[(toInt(currentWeek.Category.Name)-1)*7+3].Repeats==null" style="color:lightgray">--</span></td>
+                    <td class="Fr">{{mission.StepOfMissions[(toInt(currentWeek.Category.Name)-1)*7+4].Repeats}}<span ng-if="mission.StepOfMissions[(toInt(currentWeek.Category.Name)-1)*7+4].Repeats==null" style="color:lightgray">--</span></td>
+                    <td class="St">{{mission.StepOfMissions[(toInt(currentWeek.Category.Name)-1)*7+5].Repeats}}<span ng-if="mission.StepOfMissions[(toInt(currentWeek.Category.Name)-1)*7+5].Repeats==null" style="color:lightgray">--</span></td>
+                    <td class="Sn">{{mission.StepOfMissions[(toInt(currentWeek.Category.Name)-1)*7+6].Repeats}}<span ng-if="mission.StepOfMissions[(toInt(currentWeek.Category.Name)-1)*7+6].Repeats==null" style="color:lightgray">--</span></td>
+                </tr>*@
+
+
+
+
+
+
+        </table>
+    </div>
+
+    <div class="EmptySpace"></div>
+</div>
+<!-- //Details Регулярное дело (раскрывающийся блок с деталями Mission) -->   
